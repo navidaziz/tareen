@@ -53,24 +53,22 @@ echo form_open_multipart(ADMIN_DIR . "reception/save_data", $add_form_attr);
       </div>
       <div class="box-body">
 
-        <table style="width: 100%;">
+        <table style="width: 100%;" style="font-size: 8px;">
+
           <tr>
-            <td style="text-align: center; color: #BC181D;"><?php $file = pathinfo($system_global_settings[0]->sytem_admin_logo);
-                                                            $log = $file['dirname'] . '/' . $file['filename'] . '_thumb.' . $file['extension'];
-                                                            ?>
+            <td style="text-align: center; color: #BC181D; font-size:12px; width:210px"><?php $file = pathinfo($system_global_settings[0]->sytem_admin_logo);
+                                                                                        $log = $file['dirname'] . '/' . $file['filename'] . '_thumb.' . $file['extension'];
+                                                                                        ?>
               <!-- <a href="<?php echo site_url(ADMIN_DIR . $this->session->userdata("role_homepage_uri")); ?>"> 
         <img src="<?php echo site_url("assets/uploads/" . $log); ?>" alt="<?php echo $system_global_settings[0]->system_title ?>" 
         title="<?php echo $system_global_settings[0]->system_title ?>" class="img-responsive " style="width:40px !important;"></a>-->
-              <h5 style="margin-top: -5px;"><strong>Tareen Infertility & Impotence Center</strong></h5>
-              <h5 style="margin-top: -5px;">Peshawar</h5>
+              <strong>Tareen Infertility & Impotence Center</strong>
             </td>
-            <td>
-              <ul class="nav navbar-nav pull-right" style="margin-top: -20px;">
-                <li style="float:right" class="dropdown user" id="header-user"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <img alt="" src="<?php
-                                                                                                                                                              $file = pathinfo($this->session->userdata("user_image"));
-
-
-                                                                                                                                                              echo site_url("assets/uploads/" . @$file['dirname'] . '/' . @$file['filename'] . '_thumb.' . @$file['extension']); ?>" /> <span class="username"><?php echo $this->session->userdata("user_title"); ?></span> <i class="fa fa-angle-down"></i> </a>
+            <td style="font-size:12px">
+              <ul class="nav navbar-nav pull-right" style="padding:0px">
+                <li style="float:right" class="dropdown user" id="header-user"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <span class="username"><?php //echo $this->session->userdata("user_title"); 
+                                            ?>Logout <i class="fa fa-angle-down"></i></span> </a>
                   <ul class="dropdown-menu">
                     <li><a href="<?php echo site_url(ADMIN_DIR . "users/update_profile"); ?>"><i class="fa fa-user"></i> Update Profile</a></li>
                     <li><a href="<?php echo site_url(ADMIN_DIR . "users/logout"); ?>"><i class="fa fa-power-off"></i> Log Out</a></li>
@@ -87,7 +85,14 @@ echo form_open_multipart(ADMIN_DIR . "reception/save_data", $add_form_attr);
         <hr style="margin-top: -5px;" />
         <link rel="stylesheet" href="<?php echo site_url("assets/" . ADMIN_DIR . "/other_files/jquery-ui.css"); ?>">
         <table style="width: 100%;">
-
+          <tr>
+            <td colspan="2">
+              <div style="padding: 5px;">
+                Search By Filled By Patient ID:
+                <input class="form-control" type="text" id="patientId" name="patientId" value="" placeholder="Patient ID" />
+              </div>
+            </td>
+          </tr>
           <tr>
             <td>Patient Name: </td>
 
@@ -96,7 +101,7 @@ echo form_open_multipart(ADMIN_DIR . "reception/save_data", $add_form_attr);
 
               <input type="hidden" name="patientID" id="patientID" />
 
-              <input type="text" name="patient_name" value="" id="patient_name" autocomplete="off" class="ui-autocomplete-input" style="" required="required" title="Name" placeholder="Name">
+              <input class="form-control" type="text" name="patient_name" value="" id="patient_name" autocomplete="off" class="ui-autocomplete-input" style="" required="required" title="Name" placeholder="Name">
 
               <span id="please_wait"></span>
 
@@ -104,6 +109,38 @@ echo form_open_multipart(ADMIN_DIR . "reception/save_data", $add_form_attr);
 
 
             <script>
+              $('#patientId').on('keydown', function(e) {
+                if (e.keyCode == 13) {
+
+                  var patient_id = $('#patientId').val();
+                  // alert(patient);
+                  $('#please_wait').html('<p style="text-align:center"><strong>Please Wait...... Loading</strong></p>');
+                  $.ajax({
+                    type: "POST",
+                    url: "<?php echo site_url(ADMIN_DIR . "/reception/get_patient_by_patient_id"); ?>",
+                    data: {
+                      patient_id: patient_id
+                    }
+                  }).done(function(data) {
+                    var patient = jQuery.parseJSON(data);
+                    //alert(patient);
+                    $('#patient_name').val(patient.patient_name);
+                    $('#patientID').val(patient.patient_id);
+                    $('#patient_address').val(patient.patient_address);
+                    $('#patient_age').val(patient.patient_age);
+                    if (patient.patient_gender == 'Male') {
+                      $('#male').attr('checked', true);
+                    } else {
+                      $('#female').attr('checked', true);
+                    }
+                    $('#patient_mobile_no').val(patient.patient_mobile_no);
+
+                  });
+                  $('#please_wait').hide();
+                }
+
+              });
+
               $(function() {
                 var availableTags = [
                   <?php $query = "SELECT `patient_id`, `patient_name` 
@@ -152,21 +189,31 @@ echo form_open_multipart(ADMIN_DIR . "reception/save_data", $add_form_attr);
 
           </tr>
 
-          <tr>
-            <td>Address: </td>
-            <td><input type="text" name="patient_address" value="" id="patient_address" class="for m-control" style="" required="required" title="Address" placeholder="Address"></td>
-          </tr>
+
           <tr>
             <td>Age: </td>
-            <td><input type="text" name="patient_age" value="" id="patient_age" class="for m-control" style="" required="required" title="Patient Age" placeholder="Patient Age"></td>
+            <td><input type="number" name="patient_age" min="10" max="100" value="" id="patient_age" class="form-control" style="" required="required" title="Patient Age" placeholder="Patient Age"></td>
           </tr>
           <tr>
             <td>Sex: </td>
-            <td><input type="radio" name="patient_gender" value="Male" id="male" style="" required="required" class="uniform"><label for="patient_gender" style="margin-left:10px;">Male</label><input type="radio" name="patient_gender" value="Female" id="female" style="" required="required" class="uniform"><label for="patient_gender" style="margin-left:10px;">Female</label></td>
+            <td>
+              <input onclick="$('#female2').prop('checked', true);" type="radio" name="patient_gender" value="Male" id="male" style="" required="required" class="uniform">
+              <label for="patient_gender" style="margin-left:10px;">Male</label>
+              <input onclick="$('#male2').prop('checked', true);" type="radio" name="patient_gender" value="Female" id="female" style="" required="required" class="uniform">
+              <label for="patient_gender" style="margin-left:10px;">Female</label>
+            </td>
+          </tr>
+          <tr>
+            <td>Mobile No:</td>
+            <td><input type="text" minlength="11" name="patient_mobile_no" value="" id="patient_mobile_no" class="form-control" style="" title="Mobile No" placeholder="Mobile No"></td>
+          </tr>
+          <tr>
+            <td>Address: </td>
+            <td><input type="text" name="patient_address" value="" id="patient_address" class="form-control" style="" required="required" title="Address" placeholder="Address"></td>
           </tr>
           <tr>
             <td>Referred By: </td>
-            <td><select class="for m-control" required name="refered_by">
+            <td><select class="form-control" required name="refered_by">
                 <?php
 
                 $query = "SELECT * FROM `doctors` WHERE `status`=1";
@@ -180,13 +227,43 @@ echo form_open_multipart(ADMIN_DIR . "reception/save_data", $add_form_attr);
 
               </select></td>
           </tr>
-
           <tr>
-            <td>Mobile No:</td>
-            <td><input type="text" minlength="11" name="patient_mobile_no" value="" id="patient_mobile_no" class="for m-control" style="" title="Mobile No" placeholder="Mobile No"></td>
+            <td colspan="2">
 
+              <div id="multiple_token_option" style="display: none;">
+                <input id="singleToken" type="radio" name="toke_type" value="single" checked required onclick="single_token()" /> Single Token
+                <input id="multipleToken" type="radio" name="toke_type" value="multiple" required onclick="multiple_token()" /> Multiple Tokens
+                <div id="second_patient_for" style="padding: 10px; display:none;">
+                  <h5>Other Patient Detail</h5>
+                  <table>
+                    <tr>
+                      <td>Patient Name: </td>
+                      <td>
+                        <input class="patient2" type="text" name="patient2_name" class="form-control" />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Patient Age: </td>
+                      <td>
+                        <input class="patient2" type="number" name="patient2_age" class="form-control" />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Sex: </td>
+                      <td><input onclick="$('#female').prop('checked', true);" class="patient2" type="radio" name="patient2_gender" value="Male" id="male2" style="" class="uniform">
+                        <label for="patient_gender" style="margin-left:10px;">Male</label>
+                        <input onclick="$('#male').prop('checked', true);" class="patient2" type="radio" name="patient2_gender" value="Female" id="female2" style="" class="uniform">
+                        <label for="patient_gender" style="margin-left:10px;">Female</label>
+                      </td>
+                    </tr>
+                  </table>
 
+                </div>
+              </div>
+            </td>
           </tr>
+
+
 
         </table>
         <hr />
@@ -282,15 +359,18 @@ echo form_open_multipart(ADMIN_DIR . "reception/save_data", $add_form_attr);
       </div>
       <div class="box-body">
         <div style="background-color: white; padding-bottom:10px">
-          <h4>Appointments</h4>
           <?php
           $query = "SELECT * FROM `test_groups` WHERE category_id=5";
           $appinments = $this->db->query($query)->result();
-          foreach ($appinments as $appinment) { ?>
+          foreach ($appinments as $appinment) {
+
+          ?>
             <input class="appointments" style="display: inline;" name="test_group_id[]" id="TG_<?php echo $appinment->test_group_id; ?>" onclick="set_price('<?php echo $appinment->test_group_id; ?>', '<?php echo $appinment->test_group_name; ?>', '<?php echo $appinment->test_price; ?>', '<?php echo $appinment->test_time; ?>')" type="radio" value="<?php echo $appinment->test_group_id; ?>" />
             <strong><?php echo $appinment->test_group_name; ?></strong> <span style="margin-left: 5px;"></span>
             <?php if ($appinment->test_group_id == 4) {
-              $query = "SELECT `invoices`.`today_count` FROM invoices WHERE `invoices`.`opd_doctor` = 4 and `invoices`.`category_id` = 5 and DATE(`invoices`.`created_date`) = DATE(NOW())";
+              $query = "SELECT `invoices`.`today_count` FROM invoices WHERE `invoices`.`opd_doctor` = 4 and `invoices`.`category_id` = 5 
+              and DATE(`invoices`.`created_date`) = DATE(NOW())
+              AND is_deleted=0";
               $dr_appointments = $this->db->query($query)->result();
               $appointment_array = array();
               foreach ($dr_appointments as $dr_appointment) {
@@ -310,8 +390,24 @@ echo form_open_multipart(ADMIN_DIR . "reception/save_data", $add_form_attr);
                   <?php if ($count_row == 1) { ?> <tr> <?php } ?>
                     <td style="text-align: center; <?php if (in_array($i, $appointment_array)) { ?> background-color:#90EE90 <?php } ?> ">
 
-                      <?php if (in_array($i, $appointment_array)) { ?>
-                        <i class="fa fa-check" aria-hidden="true"></i>
+                      <?php if (in_array($i, $appointment_array)) {
+                        $query = "SELECT COUNT(*) as total FROM invoices 
+                        WHERE `invoices`.`opd_doctor` = 4 and `invoices`.`category_id` = 5 
+                        AND DATE(`invoices`.`created_date`) = DATE(NOW())
+                        AND today_count='" . $i . "'";
+
+                        $appointment_total = $this->db->query($query)->row()->total;
+                        if ($appointment_total == 1) {
+                      ?>
+                          <i class="fa fa-check" aria-hidden="true"></i>
+                        <?php }
+
+                        if ($appointment_total == 2) { ?>
+                          <span class="fa-stack  text-success">
+                            <i class="fa fa-check" style="margin-left:-3px;"></i>
+                            <i class="fa fa-check" style="margin-left:-4px"></i>
+                          </span>
+                        <?php } ?>
                         <br /><strong style="vertical-align: middle;"><?php echo $i; ?> </strong>
                       <?php } else { ?>
                         <input class="appointment_numbers" type="radio" name="appointment_no" value="<?php echo $i; ?>" />
@@ -525,13 +621,13 @@ echo form_open_multipart(ADMIN_DIR . "reception/save_data", $add_form_attr);
                   if ($test->status == 1 and $test->is_deleted == 0) { ?>
                     New
                     <?php if ($this->session->userdata('user_id') == 3) { ?>
-                      <a href="<?php echo site_url(ADMIN_DIR . "lab/delete_invoice/$test->invoice_id") ?>" class="pull-right"><i class="fa fa-times" style="color:red"></i> Cancel</a>
+                      <a target="new" href="<?php echo site_url(ADMIN_DIR . "lab/delete_invoice/$test->invoice_id") ?>" class="pull-right"><i class="fa fa-times" style="color:red"></i> Cancel</a>
                     <?php } ?>
                   <?php } ?>
                   <?php if ($test->status == 2) { ?>
                     Inprogress
                   <?php  } ?>
-                  <?php if ($test->status == 3) { ?>
+                  <?php if ($test->status == 3 and $test->opd_doctor != 4) { ?>
 
                     <a style="margin-left: 10px;" target="new" href="<?php echo site_url(ADMIN_DIR . "lab/print_patient_test_report/$test->invoice_id") ?>"><i class="fa fa-print" aria-hidden="true"></i> Print Report</a>
                 <?php  }
@@ -601,10 +697,13 @@ echo form_open_multipart(ADMIN_DIR . "reception/save_data", $add_form_attr);
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Update Patient Detail</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <h5 class="modal-title">Update Patient Detail
+          <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+
+        </h5>
+
       </div>
       <div class="modal-body" id="patient_detail_body">
         <p>Modal body text goes here.</p>
@@ -695,9 +794,18 @@ echo form_open_multipart(ADMIN_DIR . "reception/save_data", $add_form_attr);
       if (test_group_id == 4) {
         $('#dr_app_list').show();
         $('.appointment_numbers').prop('required', true);
+        $('#multiple_token_option').show();
+        //single_token();
+        $("#singleToken").prop("checked", true);
+        $('#second_patient_for').hide();
+        $('.patient2').attr('required', false);
       } else {
         $('#dr_app_list').hide();
         $('.appointment_numbers').prop('required', false);
+        $('#multiple_token_option').hide();
+        $("#singleToken").prop("checked", true);
+        $('#second_patient_for').hide();
+        $('.patient2').attr('required', false);
       }
 
     } else {
@@ -793,6 +901,24 @@ echo form_open_multipart(ADMIN_DIR . "reception/save_data", $add_form_attr);
     //alert();
     //$('#test_price_list').html(price_list);
     console.log(test_group_name);
+  }
+
+  function single_token() {
+    <?php
+    $query = "SELECT * FROM `test_groups` WHERE  category_id=5 and test_group_id=4";
+    $appinment = $this->db->query($query)->row(); ?>
+    set_price('<?php echo $appinment->test_group_id; ?>', '<?php echo $appinment->test_group_name; ?>', '<?php echo $appinment->test_price; ?>', '<?php echo $appinment->test_time; ?>');
+    $("#singleToken").prop("checked", true);
+    $('#second_patient_for').hide();
+    $('.patient2').attr('required', false);
+
+  }
+
+  function multiple_token() {
+    set_price('<?php echo $appinment->test_group_id; ?>', '<?php echo $appinment->test_group_name; ?>', '<?php echo ($appinment->test_price * 2); ?>', '<?php echo $appinment->test_time; ?>');
+    $("#multipleToken").prop("checked", true);
+    $('#second_patient_for').show();
+    $('.patient2').attr('required', true);
   }
 </script>
 

@@ -70,18 +70,7 @@ class Reception extends Admin_Controller
 
 	public function save_data()
 	{
-
-		//save patient data and get pacient id ....
-		if ($this->input->post('patientID') and ($this->input->post('patient_name') != "Dr Ref" or  $this->input->post('patient_name') != "Dr. Ref")) {
-			$patient_id = (int) $this->input->post('patientID');
-		} else {
-			$patient_id = $this->patient_model->save_data();
-		}
 		$test_group_ids = rtrim($this->input->post('testGroupIDs'), ',');
-		//$test_group_ids =  implode(',', $this->input->post('test_group_id'));
-		//exit();
-
-
 		$query = "SELECT category_id FROM `test_groups` 
 				WHERE `test_groups`.`test_group_id` IN (" . $test_group_ids . ")
 				GROUP BY `category_id`";
@@ -92,6 +81,12 @@ class Reception extends Admin_Controller
 		}
 
 
+		//save patient data and get pacient id ....
+		if ($this->input->post('patientID') and ($this->input->post('patient_name') != "Dr Ref" or  $this->input->post('patient_name') != "Dr. Ref")) {
+			$patient_id = (int) $this->input->post('patientID');
+		} else {
+			$patient_id = $this->patient_model->save_data();
+		}
 		$discount = $this->input->post("discount");
 
 		$tax = $this->input->post("tax");
@@ -103,18 +98,16 @@ class Reception extends Admin_Controller
 		$query_result = $this->db->query($query);
 		$total_test_price = $query_result->result()[0]->total_test_price;
 
-
 		$inputs = array();
-
 		$inputs["patient_id"]  =  $patient_id;
 		$inputs["discount"]  =  $discount;
 		$inputs["price"]  =  $total_test_price;
 		$inputs["sale_tax"]  =  $tax;
-		$inputs["total_price"]  =  ($total_test_price + $tax) - $discount;
+		$inputs["total_price"]  = $total_price =  ($total_test_price + $tax) - $discount;
 		$inputs["patient_refer_by"]  =  $refered_by;
 		$inputs["created_by"]  =  $this->session->userdata('user_id');
 		$inputs["category_id"]  =  $category_id[0]->category_id;
-		$inputs['alkhidmat_income'] = $inputs["total_price"];
+		$inputs['alkhidmat_income'] = $total_price;
 		if ($discount > 0) {
 			$inputs['discount_type_id'] = $this->input->post("discount_type_id");
 			$inputs['discount_ref_by'] = $this->input->post("discount_ref_by");
@@ -128,10 +121,9 @@ class Reception extends Admin_Controller
 			AND DATE(created_date) = DATE(NOW())")->result()[0]->total;
 			$inputs["opd_doctor"] = $test_group_ids;
 			$inputs['alkhidmat_income'] = 0;
-			$query = "SELECT `test_groups`.`share` FROM `test_groups` WHERE `test_groups`.`test_group_id`='" . $test_group_ids . "'";
+			$query = "SELECT `test_groups`.`share` FROM `test_groups` 
+			WHERE `test_groups`.`test_group_id`='" . $test_group_ids . "'";
 			$inputs['alkhidmat_income'] = $this->db->query($query)->result()[0]->share;
-
-			$inputs["patient_refer_by"]  =  1;
 		} else {
 			$today_count = $this->db->query("SELECT count(*) as total FROM `invoices` 
 		               WHERE category_id = '" . $category_id[0]->category_id . "'
@@ -145,27 +137,8 @@ class Reception extends Admin_Controller
 			$status = 1;
 		}
 
-
 		$invoice_id  = $this->invoice_model->save($inputs);
-
-
-		$where = "`test_groups`.`test_group_id` IN (" . $test_group_ids . ") ORDER BY `test_groups`.`order`";
-		$patient_test_groups = $this->test_group_model->get_test_group_list($where, false);
-		foreach ($patient_test_groups as $patient_test_group) {
-			$query = "INSERT INTO `invoice_test_groups`(`invoice_id`, `patient_id`, `test_group_id`, `price`) 
-				    VALUES ('" . $invoice_id . "', '" . $patient_id . "', '" . $patient_test_group->test_group_id . "', '" . $patient_test_group->test_price . "')";
-			$this->db->query($query);
-		}
-
-
 		$test_token_id = time();
-		$group_ids = $test_group_ids;
-
-		// if ($category_id[0]->category_id == 1) {
-		// } else {
-		// }
-
-
 		$query = "UPDATE `invoices` 
 					SET `test_token_id`='" . $test_token_id . "',
 						`test_report_by`='" . $this->session->userdata("user_id") . "',
@@ -173,48 +146,85 @@ class Reception extends Admin_Controller
 					WHERE `invoice_id` = '" . $invoice_id . "'";
 		$this->db->query($query);
 
-		// $query = "SELECT 
-		// 			  `test_group_tests`.`test_group_id`,
-		// 			  `tests`.`test_id`,
-		// 			  `tests`.`test_category_id`,
-		// 			  `tests`.`test_type_id`,
-		// 			  `tests`.`test_name`,
-		// 			  `tests`.`test_description`,
-		// 			  `tests`.`normal_values` 
-		// 			FROM
-		// 			  `tests`,
-		// 			  `test_group_tests`
-		// 			WHERE  `tests`.`test_id` = `test_group_tests`.`test_id` 
-		// 			AND `test_group_tests`.`test_group_id` IN (" . $group_ids . ") 
-		// 			ORDER BY `test_group_tests`.`test_group_id` ASC, `test_group_tests`.`order` ASC";
-		// $query_result = $this->db->query($query);
-		// $all_tests = $query_result->result();
-		// $order = 1;
-		// foreach ($all_tests as $test) {
-		// 	$query = "INSERT INTO `patient_tests`(`invoice_id`, 
-		// 											  `test_group_id`, 
-		// 											  `test_category_id`, 
-		// 											  `test_type_id`, 
-		// 											  `test_id`, 
-		// 											  `test_name`, 
-		// 											  `test_normal_value`, 
-		// 											  `test_result`, 
-		// 											  `remarks`,
-		// 											  `created_by`,
-		// 											  `order`) 
-		// 									VALUES('" . $invoice_id . "',
-		// 										   '" . $test->test_group_id . "',
-		// 										   '" . $test->test_category_id . "',
-		// 											'" . $test->test_type_id . "',
-		// 											'" . $test->test_id . "',
-		// 											'" . $test->test_name . "',
-		// 											'" . $test->normal_values . "',
-		// 											'',
-		// 											'',
-		// 											'" . $this->session->userdata("user_id") . "',
-		// 											'" . $order++ . "')";
-		// 	$this->db->query($query);
-		// }
+		if ($category_id[0]->category_id == 1) {
+			$where = "`test_groups`.`test_group_id` IN (" . $test_group_ids . ") ORDER BY `test_groups`.`order`";
+			$patient_test_groups = $this->test_group_model->get_test_group_list($where, false);
+			foreach ($patient_test_groups as $patient_test_group) {
+				$query = "INSERT INTO `invoice_test_groups`(`invoice_id`, `patient_id`, `test_group_id`, `price`) 
+				    VALUES ('" . $invoice_id . "', '" . $patient_id . "', '" . $patient_test_group->test_group_id . "', '" . $patient_test_group->test_price . "')";
+				$this->db->query($query);
+			}
+		}
+
+
+
+		if ($this->input->post('toke_type') == 'multiple' and $test_group_ids == 4) {
+
+			$_POST['patient_name'] = $this->input->post('patient2_name');
+			$_POST['patient_age'] = $this->input->post('patient2_age');
+			$_POST['patient_gender'] = $this->input->post('patient2_gender');
+			$patient_id = $this->patient_model->save_data();
+			$discount = $this->input->post("discount");
+
+			$tax = $this->input->post("tax");
+			$refered_by = $this->input->post("refered_by");
+
+			$query = "SELECT SUM(`test_price`) as `total_test_price` 
+				FROM `test_groups` 
+				WHERE `test_groups`.`test_group_id` IN (" . $test_group_ids . ")";
+			$query_result = $this->db->query($query);
+			$total_test_price = $query_result->result()[0]->total_test_price;
+
+			$inputs = array();
+			$inputs["patient_id"]  =  $patient_id;
+			$inputs["discount"]  =  $discount;
+			$inputs["price"]  =  $total_test_price;
+			$inputs["sale_tax"]  =  $tax;
+			$inputs["total_price"]  = $total_price =  ($total_test_price + $tax) - $discount;
+			$inputs["patient_refer_by"]  =  $refered_by;
+			$inputs["created_by"]  =  $this->session->userdata('user_id');
+			$inputs["category_id"]  =  $category_id[0]->category_id;
+			$inputs['alkhidmat_income'] = $total_price;
+			if ($discount > 0) {
+				$inputs['discount_type_id'] = $this->input->post("discount_type_id");
+				$inputs['discount_ref_by'] = $this->input->post("discount_ref_by");
+			}
+
+
+			if ($category_id[0]->category_id == 5) {
+				$today_count = $this->db->query("SELECT count(*) as total FROM `invoices` 
+			WHERE category_id = '" . $category_id[0]->category_id . "'
+			AND opd_doctor = '" . $test_group_ids . "'
+			AND DATE(created_date) = DATE(NOW())")->result()[0]->total;
+				$inputs["opd_doctor"] = $test_group_ids;
+				$inputs['alkhidmat_income'] = 0;
+				$query = "SELECT `test_groups`.`share` FROM `test_groups` 
+			WHERE `test_groups`.`test_group_id`='" . $test_group_ids . "'";
+				$inputs['alkhidmat_income'] = $this->db->query($query)->result()[0]->share;
+			} else {
+				$today_count = $this->db->query("SELECT count(*) as total FROM `invoices` 
+		               WHERE category_id = '" . $category_id[0]->category_id . "'
+					   AND DATE(created_date) = DATE(NOW())")->result()[0]->total;
+			}
+			if ($test_group_ids == 4) {
+				$inputs["today_count"]  =  $this->input->post("appointment_no");
+				$status = 3;
+			} else {
+				$inputs["today_count"]  =  $today_count + 1;
+				$status = 1;
+			}
+
+			$invoice_id  = $this->invoice_model->save($inputs);
+			$test_token_id = time();
+			$query = "UPDATE `invoices` 
+					SET `test_token_id`='" . $test_token_id . "',
+						`test_report_by`='" . $this->session->userdata("user_id") . "',
+						`status`='" . $status . "'
+					WHERE `invoice_id` = '" . $invoice_id . "'";
+			$this->db->query($query);
+		}
+
+
 
 		$this->session->set_flashdata("msg_success", "Data Save Successfully.");
 		redirect(ADMIN_DIR . "reception");
@@ -301,6 +311,14 @@ class Reception extends Admin_Controller
 		$patient_detail = $this->db->query($query)->result()[0];
 		echo json_encode($patient_detail);
 	}
+	public function get_patient_by_patient_id()
+	{
+		$patient_id = (int) $this->input->post('patient_id');
+		$query = "SELECT * FROM patients WHERE patient_id ='" . $patient_id . "'";
+		$patient_detail = $this->db->query($query)->row();
+		echo json_encode($patient_detail);
+	}
+
 
 	public function get_patient_detail_by_id()
 	{
@@ -318,12 +336,14 @@ class Reception extends Admin_Controller
 		$patient_age =  $this->db->escape($this->input->post("patient_age"));
 		$patient_gender =  $this->db->escape($this->input->post("patient_gender"));
 		$patient_mobile_no =  $this->db->escape($this->input->post("patient_mobile_no"));
+		$history_file_no =  $this->db->escape($this->input->post("history_file_no"));
 
 		$query = "UPDATE patients SET patient_name = $patient_name,
 		       patient_address = $patient_address,
 			   patient_age = $patient_age,
 			   patient_gender = $patient_gender,
-			   patient_mobile_no = $patient_mobile_no
+			   patient_mobile_no = $patient_mobile_no,
+			   history_file_no = $history_file_no
 			   WHERE patient_id = '" . $patient_id . "'";
 		$this->db->query($query);
 
