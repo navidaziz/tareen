@@ -566,7 +566,8 @@ echo form_open_multipart(ADMIN_DIR . "reception/save_data", $add_form_attr);
             <tr>
               <th>#</th>
               <th>Token</th>
-              <th>Name</th>
+              <th>Patient ID</th>
+              <th>Patient Name</th>
 
               <th>Gender</th>
               <th>Receipts</th>
@@ -605,6 +606,7 @@ echo form_open_multipart(ADMIN_DIR . "reception/save_data", $add_form_attr);
                     echo $opd_doctor . "-" . $test->today_count;
                   } ?>
               </td>
+              <td><?php echo $test->patient_id; ?></td>
               <td><a href="#" onclick="update_patient_detail('<?php echo $test->patient_id; ?>')"><?php echo $test->patient_name; ?></a></td>
               <!-- <td><?php echo $test->patient_mobile_no; ?></td> -->
               <td><?php echo $test->patient_gender; ?></td>
