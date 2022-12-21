@@ -62,6 +62,7 @@
           if ($invoice_detail->reported_date) {
             echo get_timeago($invoice_detail->reported_date);
           } ?></td>
+      </tr>
     </table>
 
     <h3>Invoice</h3>

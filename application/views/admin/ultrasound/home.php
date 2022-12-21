@@ -212,7 +212,7 @@ if (!in_array($current_action_id, $allowed_modules)) { ?>
                   <td>
 
                     <?php if ($test->status == 2) { ?>
-                      <a href="#" onclick="get_patient_test_form('<?php echo $test->invoice_id; ?>')">Add Result</a>
+                      <a href="javascript:get_patient_test_form('<?php echo $test->invoice_id; ?>')">Add Result</a>
 
                     <?php  } ?>
 
@@ -286,9 +286,9 @@ if (!in_array($current_action_id, $allowed_modules)) { ?>
                   <td>
 
                     <?php if ($test->status == 3) { ?>
-                      <a href="#" onclick="get_patient_test_form('<?php echo $test->invoice_id; ?>')">Edit Result</a>
-
-                      <a href="#" onclick="get_patient_test_report('<?php echo $test->invoice_id; ?>')">
+                      <a href="javascript:get_patient_test_form('<?php echo $test->invoice_id; ?>');">Edit Result</a>
+                      <span style="margin-left: 10px;"></span>
+                      <a href="javascript:get_patient_test_report('<?php echo $test->invoice_id; ?>')">
                         <i class="fa fa-eye" aria-hidden="true"></i> Report</a>
                       <!-- <a style="margin-left: 10px;" target="new" href="<?php echo site_url(ADMIN_DIR . "lab/print_patient_test_report/$test->invoice_id") ?>"><i class="fa fa-print" aria-hidden="true"></i> Print</a>
                 <?php  } ?> -->
@@ -315,7 +315,7 @@ if (!in_array($current_action_id, $allowed_modules)) { ?>
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" onclick="$('#test_form').modal('hide');">&times;</button>
-        <h4 class="modal-title" id="test_form_title">Test Report</h4>
+        <h4 class="modal-title" id="test_form_title">Ultrasound Report</h4>
       </div>
       <div class="modal-body" id="test_form_body" style="text-align:center !important">
 
@@ -392,7 +392,7 @@ if (!in_array($current_action_id, $allowed_modules)) { ?>
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" onclick="$('#test_form').modal('hide');">&times;</button>
-        <h4 class="modal-title" id="test_form_title">Test Report</h4>
+        <h4 class="modal-title" id="test_form_title">Ultrasound Report</h4>
       </div>
       <div class="modal-body" id="test_form_body" style="text-align:center !important">
 

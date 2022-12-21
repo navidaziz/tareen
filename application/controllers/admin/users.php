@@ -312,6 +312,12 @@ class Users extends Admin_Controller
     public function update_data($user_id)
     {
 
+        if ($this->input->post('test_group_id')) {
+            $test_group_ids = implode(',', $this->input->post('test_group_id'));
+        } else {
+            $test_group_ids = "";
+        }
+
         $user_id = (int) $user_id;
 
         if ($this->user_model->validate_form_data($user_id) === TRUE) {
@@ -322,6 +328,8 @@ class Users extends Admin_Controller
 
             $user_id = $this->user_model->update_data($user_id);
             if ($user_id) {
+                $query = "UPDATE users set test_group_ids='" . $test_group_ids . "' WHERE user_id = '" . $user_id . "'";
+                $this->db->query($query);
 
                 $this->session->set_flashdata("msg_success", $this->lang->line("update_msg_success"));
                 redirect(ADMIN_DIR . "users/edit/$user_id");

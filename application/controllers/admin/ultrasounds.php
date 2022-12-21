@@ -28,14 +28,18 @@ class Ultrasounds extends Admin_Controller
 	public function index()
 	{
 
-		$where = "`invoices`.`status` IN (1) AND category_id=5 AND DATE(`invoices`.`created_date`) = DATE(NOW()) AND `is_deleted`=0 ORDER BY `invoices`.`invoice_id` DESC";
+		$user_id = $this->session->userdata("user_id");
+		$query = "SELECT test_group_ids FROM users WHERE user_id = '" . $user_id . "'";
+		$test_group_ids = $this->db->query($query)->row()->test_group_ids;
+
+		$where = "`invoices`.`status` IN (1) AND opd_doctor = '" . $test_group_ids . "' AND category_id=5 AND DATE(`invoices`.`created_date`) = DATE(NOW()) AND `is_deleted`=0 ORDER BY `invoices`.`invoice_id` DESC";
 		$this->data["forwarded_tests"] = $this->invoice_model->get_invoice_list($where, false);
 
 
-		$where = "`invoices`.`status` IN (2) AND category_id=5 AND DATE(`invoices`.`created_date`) = DATE(NOW()) ORDER BY `invoices`.`invoice_id` DESC";
+		$where = "`invoices`.`status` IN (2) AND opd_doctor = '" . $test_group_ids . "' AND  category_id=5 AND DATE(`invoices`.`created_date`) = DATE(NOW()) ORDER BY `invoices`.`invoice_id` DESC";
 		$this->data["inprogress_tests"] = $this->invoice_model->get_invoice_list($where, false);
 
-		$where = "`invoices`.`status` IN (3) AND category_id=5 AND DATE(`invoices`.`created_date`) = DATE(NOW()) ORDER BY `invoices`.`invoice_id` DESC";
+		$where = "`invoices`.`status` IN (3) AND opd_doctor = '" . $test_group_ids . "' AND category_id=5 AND DATE(`invoices`.`created_date`) = DATE(NOW()) ORDER BY `invoices`.`invoice_id` DESC";
 		$this->data["completed_tests"] = $this->invoice_model->get_invoice_list($where, false);
 
 
@@ -96,12 +100,18 @@ class Ultrasounds extends Admin_Controller
 
 		$invoice_id = (int) $this->input->post("invoice_id");
 		$test_token_id = (int) $this->input->post("test_token_id");
-		$group_ids = trim(trim($this->input->post("patient_group_test_ids")), ",");
-
+		if ($this->input->post("patient_group_test_ids")) {
+			$group_ids = trim(trim($this->input->post("patient_group_test_ids")), ",");
+		} else {
+			$group_ids = 0;
+		}
+		//$group_ids = trim(trim($this->input->post("patient_group_test_ids")), ",");
+		$process_date = date('Y-m-d H:i:s');
 		$query = "UPDATE `invoices` 
 				SET `test_token_id`='" . $test_token_id . "',
 				    `test_report_by`='" . $this->session->userdata("user_id") . "',
-					`status`='2'
+					`status`='2',
+					`process_date` = '" . $process_date . "'
 			    WHERE `invoice_id` = '" . $invoice_id . "'";
 		$this->db->query($query);
 
@@ -232,21 +242,23 @@ class Ultrasounds extends Admin_Controller
 	public function complete_test()
 	{
 
-
-		$test_values = $this->input->post('test_values');
-		foreach ($test_values as $patient_test_id => $test_value) {
-			$query = "UPDATE `patient_tests` 
+		if ($this->input->post('test_values')) {
+			$test_values = $this->input->post('test_values');
+			foreach ($test_values as $patient_test_id => $test_value) {
+				$query = "UPDATE `patient_tests` 
 				  SET `test_result`=" . $this->db->escape($test_value) . " 
 				  WHERE `patient_test_id`=" . $this->db->escape($patient_test_id) . "";
-			$this->db->query($query);
+				$this->db->query($query);
+			}
 		}
 
-
+		$reported_date = date('Y-m-d H:i:s');
 		$invoice_id = (int) $this->input->post("invoice_id");
 		$remarks = $this->db->escape($this->input->post("test_remarks"));
 		$query = "UPDATE `invoices` 
 				SET `status`='3'
 				, `remarks`= $remarks
+				, `reported_date` = '" . $reported_date . "'
 			    WHERE `invoice_id` = '" . $invoice_id . "'";
 		$this->db->query($query);
 		// $query = "SELECT 

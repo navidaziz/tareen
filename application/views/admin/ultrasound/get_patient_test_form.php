@@ -6,10 +6,7 @@
         <th style="width: 30%;">Invoice No:</th>
         <td><?php echo $invoice_detail->invoice_id; ?></td>
       </tr>
-      <tr>
-        <th>Test Token No.</th>
-        <td><?php echo $invoice_detail->test_token_id; ?></td>
-      </tr>
+
       <tr>
         <th>Patient Name: </th>
         <td><?php echo $invoice_detail->patient_name; ?></td>
@@ -30,10 +27,42 @@
         <th>Refered By:</th>
         <td><?php echo $invoice_detail->doctor_name . "( " . $invoice_detail->doctor_designation . " )"; ?></td>
       </tr>
+
       <tr>
         <th>Registered:</th>
-        <td><?php echo get_timeago($invoice_detail->created_date); ?></td>
+        <td title="<?php
+                    if ($invoice_detail->created_date) {
+                      echo date("d M, Y h:i:s", strtotime($invoice_detail->created_date));
+                    }
+                    ?>"><?php echo get_timeago($invoice_detail->created_date); ?></td>
       </tr>
+
+      <tr>
+        <th>Recevied:</th>
+        <td title="<?php
+                    if ($invoice_detail->process_date) {
+                      echo date("d M, Y h:i:s", strtotime($invoice_detail->process_date));
+                    }
+                    ?>"><?php
+                        if ($invoice_detail->process_date) {
+                          echo get_timeago($invoice_detail->process_date);
+                        } ?></td>
+      </tr>
+      <tr>
+        <th>Reported:</th>
+
+        <td title="<?php
+                    if ($invoice_detail->reported_date) {
+                      echo date("d M, Y h:i:s", strtotime($invoice_detail->reported_date));
+                    }
+                    ?>">
+          <?php
+          if ($invoice_detail->reported_date) {
+            echo get_timeago($invoice_detail->reported_date);
+          } ?></td>
+      </tr>
+
+
     </table>
 
     <h3>Invoice</h3>
@@ -66,6 +95,7 @@
         <th colspan="2" style="text-align: left;">Paid</th>
         <td><?php echo $invoice->total_price; ?></td>
       </tr>
+
     </table>
 
   </div>
@@ -101,7 +131,7 @@
       <script src="//cdn.ckeditor.com/4.19.1/standard/ckeditor.js"></script>
 
       <div style="text-align: left;"><strong>Ultrasound Report</strong>
-        <textarea name="test_remarks" id="test_remarks" class="form-control" style="margin-bottom: 5px;"></textarea>
+        <textarea name="test_remarks" id="test_remarks" class="form-control" style="margin-bottom: 5px;"><?php echo $invoice->remarks; ?></textarea>
       </div>
 
       <script>

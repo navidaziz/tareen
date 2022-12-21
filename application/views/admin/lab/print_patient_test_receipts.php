@@ -89,75 +89,80 @@
             <table style="width: 100%; margin-top: 10px; color:black">
 
               <tr>
-                <td style="text-align: center;">
-                  <h4>Tareen Infertility & Impotence Center Peshawar</h4>
-                  <h6 style="font-size: 11px;">Liberty Mall Opp: Air Port Runway, University Rd, Tahkal, Peshawar, Khyber Pakhtunkhwa 25000
-                    <br /> PHONE 0000-000000
-                  </h6>
-                  <h5>RECEIPT NO: <?php echo $invoice_detail->invoice_id; ?>
-                    <?php if ($invoice_detail->receipt_print == 0) { ?>
-                      <span style="font-size: 17px; display: block; margin-top: 5px;">Token NO: <?php echo $invoice_detail->test_token_id; ?></span>
+                <td style="text-align: center; font-weight: bold !important;">
+                  <h4 style="font-weight: bold !important;">Tareen Infertility & Impotence Center Peshawar</h4>
+                  <table class="table">
+                    <tr>
+                      <td>RECEIPT NO: <?php echo $invoice_detail->invoice_id; ?></td>
+                      <td>
+                        TOKEN NO:
+                        <?php if ($invoice_detail->receipt_print == 0) { ?>
+                          <?php echo $invoice_detail->test_token_id; ?>
+                        <?php
+                          $query = "UPDATE `invoices` SET `invoices`.`receipt_print`=1 WHERE `invoices`.`invoice_id` = '" . $invoice_detail->invoice_id . "'";
+                          $this->db->query($query);
+                        } else { ?>
+                          ******<?php echo substr($invoice_detail->test_token_id, -4); ?>
+
+                        <?php } ?>
+                      </td>
+                    </tr>
+                  </table>
+
+                  <h4 style="font-weight: bold !important;">
                     <?php
-                      $query = "UPDATE `invoices` SET `invoices`.`receipt_print`=1 WHERE `invoices`.`invoice_id` = '" . $invoice_detail->invoice_id . "'";
-                      $this->db->query($query);
-                    } else { ?>
-                      <span style="font-size: 17px; display: block; margin-top: 5px;">Token NO: ******<?php echo substr($invoice_detail->test_token_id, -4); ?></span>
+                    if ($invoice_detail->category_id != 5) {
 
-                    <?php } ?>
-                    <h4>
-                      Appointment No:
-                      <?php
-                      if ($invoice_detail->category_id != 5) {
+                      $query = "SELECT test_category FROM test_categories WHERE test_category_id= '" . $invoice_detail->category_id . "'";
+                      echo $this->db->query($query)->result()[0]->test_category;
+                      echo " - " . $invoice_detail->today_count;
+                    } else {
+                      $query = "SELECT test_group_name FROM test_groups WHERE test_group_id = '" . $invoice_detail->opd_doctor . "'";
+                      $opd_doctor = $this->db->query($query)->result()[0]->test_group_name;
 
-                        $query = "SELECT test_category FROM test_categories WHERE test_category_id= '" . $invoice_detail->category_id . "'";
-                        echo $this->db->query($query)->result()[0]->test_category;
-                        echo " - " . $invoice_detail->today_count;
-                      } else {
-                        $query = "SELECT test_group_name FROM test_groups WHERE test_group_id = '" . $invoice_detail->opd_doctor . "'";
-                        $opd_doctor = $this->db->query($query)->result()[0]->test_group_name;
-                        echo  $invoice_detail->today_count;
-                        echo "<br />" . $opd_doctor . '<br />';
-                        echo date("d F, Y ", strtotime($invoice_detail->created_date));
-                      } ?>
-                    </h4>
-                  </h5>
+                      echo "" . $opd_doctor . ' - ';
+                      echo  $invoice_detail->today_count;
+                    }
+
+                    echo "<br />";
+                    echo date("d F, Y ", strtotime($invoice_detail->created_date));
+                    ?>
+
+                  </h4>
+
                 </td>
               </tr>
               <tr>
                 <td>
-                  <h5 style="border: 1px dashed  black; padding: 2px; color:black">
-                    <table width="100%" style="font-size: 15px;">
-                      <tr>
-                        <td width="100">Patient: </td>
-                        <td style="font-size: 20px;"><?php echo trim(ucwords(strtolower($invoice_detail->patient_name))); ?></td>
-                      </tr>
-                      <!--                       
-                      <tr>
-                        <td>Mobile No:</td>
-                        <td><?php echo $invoice_detail->patient_mobile_no; ?></td>
-                      </tr> -->
-                      <tr>
-                        <td colspan="2">Gender: <span style="font-size: 20px;"><?php echo $invoice_detail->patient_gender; ?></span>
-                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Age: <span style="font-size: 20px;"><?php echo @$invoice_detail->patient_age; ?> Y </span></td>
-                      </tr>
 
-                      <tr>
-                        <td>Address</td>
-                        <td><?php echo trim(ucwords(strtolower($invoice_detail->patient_address))); ?></td>
-                      </tr>
+                  <table width="100%" style="font-size: 15px; font-weight:bold !important;">
+                    <tr>
+                      <td>Patient ID: </td>
+                      <td><?php echo trim(ucwords(strtolower($invoice_detail->patient_id))); ?></td>
+                    </tr>
+                    <tr>
+                      <td>Patient Name: </td>
+                      <td><?php echo trim(ucwords(strtolower($invoice_detail->patient_name))); ?></td>
+                    </tr>
 
-                      <?php if ($invoice_detail->category_id != 5) { ?>
-                        <tr>
-                          <td>Refereed By:</td>
-                          <td><?php echo str_replace("Muhammad", "M.", $invoice_detail->doctor_name) . "( " . $invoice_detail->doctor_designation . " )"; ?></td>
-                        </tr>
-                      <?php } ?>
+                    <tr>
+                      <td>Age/Sex:</td>
+                      <td><?php echo @$invoice_detail->patient_age; ?> Y / <?php echo $invoice_detail->patient_gender; ?></td>
+                    </tr>
+
+                    <tr>
+                      <td>Address</td>
+                      <td><small><?php echo trim(ucwords(strtolower($invoice_detail->patient_address))); ?></small></td>
+                    </tr>
+
+                    <?php if ($invoice_detail->category_id != 5) { ?>
                       <tr>
-                        <td>Date & Time:</td>
-                        <td><?php echo date("d F, Y h:i:s", strtotime($invoice_detail->created_date)); ?></td>
+                        <td>Refereed By:</td>
+                        <td><?php echo str_replace("Muhammad", "M.", $invoice_detail->doctor_name) . "( " . $invoice_detail->doctor_designation . " )"; ?></td>
                       </tr>
-                    </table>
-                    <h5>
+                    <?php } ?>
+                  </table>
+
                 </td>
 
               </tr>
@@ -166,7 +171,7 @@
                 <td>
 
                   <h5>
-                    <table border="1" width="100%" style="border-collapse:collapse; color:black; font-size: 15px;">
+                    <table border="1" width="100%" style="font-weight:bold !important" class="table">
                       <tr>
                         <td>#</td>
                         <td>Details</td>
@@ -188,30 +193,35 @@
                         </tr>
                       <?php } ?>
                       <tr>
-                        <th colspan="3" style="text-align: right;">
-                          <h4>
-                            Total: <?php echo $invoice->price; ?>.00 Rs <br />
-                            Discount: <?php if ($invoice->discount) {
-                                        echo $invoice->discount;
-                                      } else {
-                                        echo "00";
-                                      }  ?>.00 Rs <br />
-                            Total: <?php echo $invoice->total_price; ?>.00 Rs
-                          </h4>
+                        <td colspan="2" style="text-align: right;">Total (Rs.)</td>
+                        <td style="text-align: center;"><?php echo $invoice->price; ?>.00</td>
+                      </tr>
+                      <tr>
+                        <td colspan="2" style="text-align: right;">Discount (Rs.)</td>
+                        <td style="text-align: center;"><?php if ($invoice->discount) {
+                                                          echo $invoice->discount;
+                                                        } else {
+                                                          echo "00";
+                                                        }  ?>.00
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="2" style="text-align: right;">Total (Rs.)</td>
+                        <td style="text-align: center;"><?php echo $invoice->total_price; ?>.00</td>
+                      </tr>
+
+
+                    </table>
+                  </h5>
                 </td>
               </tr>
-
             </table>
-            </h5>
           </td>
         </tr>
-    </table>
-    </td>
-    </tr>
-    </thead>
+      </thead>
 
     </table>
-    <p style="font-size: smaller; font-weight: initial; text-align: center; color:black">Data entered by:
+    <p style="font-size: smaller; font-weight: initial; text-align: center; color:black">@created
       <?php $query = "SELECT user_title from users WHERE user_id='" . $invoice->created_by . "'";
       echo $this->db->query($query)->result()[0]->user_title;
       $query = "SELECT
@@ -221,7 +231,7 @@
               WHERE `roles`.`role_id` = `users`.`role_id`
               AND `users`.`user_id`='" . $invoice->created_by . "'";
       echo " (" . $this->db->query($query)->result()[0]->role_title . ")";
-      ?> </p>
+      ?> - <?php echo date("d F, Y h:i:s", strtotime($invoice_detail->created_date)); ?></p>
     </div>
 
   </page>

@@ -628,8 +628,11 @@ echo form_open_multipart(ADMIN_DIR . "reception/save_data", $add_form_attr);
                     Inprogress
                   <?php  } ?>
                   <?php if ($test->status == 3 and $test->opd_doctor != 4) { ?>
-
-                    <a style="margin-left: 10px;" target="new" href="<?php echo site_url(ADMIN_DIR . "lab/print_patient_test_report/$test->invoice_id") ?>"><i class="fa fa-print" aria-hidden="true"></i> Print Report</a>
+                    <?php if ($test->status == 3 and $test->opd_doctor == 1) { ?>
+                      <a style="margin-left: 10px;" target="new" href="<?php echo site_url(ADMIN_DIR . "ultrasounds/print_patient_test_report/$test->invoice_id") ?>"><i class="fa fa-print" aria-hidden="true"></i> Print Report</a>
+                    <?php } else { ?>
+                      <a style="margin-left: 10px;" target="new" href="<?php echo site_url(ADMIN_DIR . "lab/print_patient_test_report/$test->invoice_id") ?>"><i class="fa fa-print" aria-hidden="true"></i> Print Report</a>
+                    <?php } ?>
                 <?php  }
                 }  ?>
               </td>

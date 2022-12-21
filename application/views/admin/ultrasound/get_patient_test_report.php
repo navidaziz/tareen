@@ -32,7 +32,36 @@
       </tr>
       <tr>
         <th>Registered:</th>
-        <td><?php echo get_timeago($invoice_detail->created_date); ?></td>
+        <td title="<?php
+                    if ($invoice_detail->created_date) {
+                      echo date("d M, Y h:i:s", strtotime($invoice_detail->created_date));
+                    }
+                    ?>"><?php echo get_timeago($invoice_detail->created_date); ?></td>
+      </tr>
+
+      <tr>
+        <th>Recevied:</th>
+        <td title="<?php
+                    if ($invoice_detail->process_date) {
+                      echo date("d M, Y h:i:s", strtotime($invoice_detail->process_date));
+                    }
+                    ?>"><?php
+                        if ($invoice_detail->process_date) {
+                          echo get_timeago($invoice_detail->process_date);
+                        } ?></td>
+      </tr>
+      <tr>
+        <th>Reported:</th>
+
+        <td title="<?php
+                    if ($invoice_detail->reported_date) {
+                      echo date("d M, Y h:i:s", strtotime($invoice_detail->reported_date));
+                    }
+                    ?>">
+          <?php
+          if ($invoice_detail->reported_date) {
+            echo get_timeago($invoice_detail->reported_date);
+          } ?></td>
       </tr>
     </table>
 
@@ -53,26 +82,26 @@
         </tr>
       <?php } ?>
       <tr>
-          <th colspan="2" style="text-align: left;">Total</th>
-          <td><?php echo $invoice->price; ?></td>
-        </tr>
+        <th colspan="2" style="text-align: left;">Total</th>
+        <td><?php echo $invoice->price; ?></td>
+      </tr>
 
-        <tr>
-          <th colspan="2" style="text-align: left;">Discount</th>
-          <td><?php echo $invoice->discount; ?></td>
-        </tr>
+      <tr>
+        <th colspan="2" style="text-align: left;">Discount</th>
+        <td><?php echo $invoice->discount; ?></td>
+      </tr>
 
-        <tr>
-          <th colspan="2" style="text-align: left;">Paid</th>
-          <td><?php echo $invoice->total_price; ?></td>
-        </tr>
+      <tr>
+        <th colspan="2" style="text-align: left;">Paid</th>
+        <td><?php echo $invoice->total_price; ?></td>
+      </tr>
     </table>
 
   </div>
   <div class="col-md-8">
 
- 
-  
+
+
 
     <?php foreach ($patient_tests_groups as $patient_tests_group) { ?>
       <h3><?php echo $patient_tests_group->test_group_name; ?></h3>
@@ -98,8 +127,8 @@
       </table>
     <?php  } ?>
     <div style="text-align: left;"><strong>Remarks:</strong>
-    <p style="border: 1px dashed #ddd; border-radius: 5px; padding: 5px; min-height: 50px;"><?php echo $invoice_detail->remarks; ?></p>
+      <p style="border: 1px dashed #ddd; border-radius: 5px; padding: 5px; min-height: 50px;"><?php echo $invoice_detail->remarks; ?></p>
     </div>
-      <a target="new"  href="<?php echo site_url(ADMIN_DIR."lab/print_patient_test_report/$invoice_id") ?>" class="btn btn-primary" ><i class="fa fa-print" aria-hidden="true"></i> Print Test Report</a>
+    <a target="new" href="<?php echo site_url(ADMIN_DIR . "ultrasounds/print_patient_test_report/$invoice_id") ?>" class="btn btn-primary"><i class="fa fa-print" aria-hidden="true"></i> Print Ultrasound Report</a>
   </div>
 </div>

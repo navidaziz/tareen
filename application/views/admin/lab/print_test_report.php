@@ -257,7 +257,7 @@
               <br />
               <?php
 
-              $query = "SELECT `created_by` FROM `patient_tests` WHERE `invoice_id`= '" . $invoice_detail->invoice_id . "' ";
+              echo $query = "SELECT `created_by` FROM `patient_tests` WHERE `invoice_id`= '" . $invoice_detail->invoice_id . "' ";
               $lab_technician_id = $this->db->query($query)->result()[0]->created_by;
 
               $query = "SELECT
