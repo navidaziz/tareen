@@ -159,7 +159,7 @@
                           <td><?php echo date("d M, Y h:i:s", strtotime($invoice_detail->created_date)); ?></td>
                         </tr>
                         <tr>
-                          <th>Recevied:</th>
+                          <th>Received:</th>
                           <td><?php echo date("d M, Y h:i:s", strtotime($invoice_detail->process_date)); ?></td>
                         </tr>
                         <tr>
@@ -193,9 +193,9 @@
                   <tr>
                     <!-- <th >#</th> -->
                     <th style="width: 200px;">TEST(s)</th>
-                    <th style="width: 300px;">NORMALS</th>
-                    <th style="width: 100px;">UNIT(s)</th>
                     <th style="width: 200px;">RESULT(s)</th>
+                    <th style="width: 100px;">UNIT(s)</th>
+                    <th style="width: 300px;">NORMALS</th>
                   </tr>
 
 
@@ -217,14 +217,14 @@
 
                       <?php } ?>
                       <tr>
-                        <!-- <th><?php echo $count++; ?></th> -->
                         <th><?php echo $patient_test->test_name; ?></th>
-                        <td style="width: 300px;">
-                          <small><?php echo $patient_test->test_normal_value; ?></small>
-                        </td>
-                        <td style="text-align: center;"> <small> <?php echo $patient_test->unit; ?> </small></td>
                         <th> <?php echo $patient_test->test_result; ?> </th>
 
+                        <th style="text-align: center;"> <small> <?php echo $patient_test->unit; ?> </small></th>
+
+                        <th style="width: 300px;">
+                          <small><?php echo $patient_test->test_normal_value; ?></small>
+                        </th>
                         <?php //if ($normal_value) { 
                         ?>
 

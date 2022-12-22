@@ -40,7 +40,7 @@
       </tr>
 
       <tr>
-        <th>Recevied:</th>
+        <th>Received:</th>
         <td title="<?php
                     if ($invoice_detail->process_date) {
                       echo date("d M, Y h:i:s", strtotime($invoice_detail->process_date));

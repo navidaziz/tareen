@@ -161,7 +161,7 @@
                           <td><?php echo date("d M, Y h:i:s", strtotime($invoice_detail->created_date)); ?></td>
                         </tr>
                         <tr>
-                          <th>Recevied:</th>
+                          <th>Received:</th>
                           <td><?php echo date("d M, Y h:i:s", strtotime($invoice_detail->process_date)); ?></td>
                         </tr>
                         <tr>
