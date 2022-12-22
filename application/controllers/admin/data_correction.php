@@ -71,4 +71,51 @@ class data_correction extends Admin_Controller
 			redirect(ADMIN_DIR . "data_correction");
 		}
 	}
+
+	public function add_discount()
+	{
+
+		$discount = (int) $this->input->post("discount");
+
+		$invoice_id = (int) $this->input->post("invoice_id");
+		$query = "SELECT price, sale_tax FROM invoices WHERE invoice_id = '" . $invoice_id . "'";
+		$invoice_data = $this->db->query($query)->row();
+		$invoice_price = $invoice_data->price;
+		$tax = $invoice_data->sale_tax;
+		$inputs = array();
+		if ($discount) {
+			$inputs['discount_type_id'] = $this->input->post("discount_type_id");
+			$inputs['discount_ref_by'] = $this->input->post("discount_ref_by");
+		} else {
+			$inputs['discount_type_id'] = "";
+			$inputs['discount_ref_by'] = "";
+		}
+		$inputs["total_price"]  =   ($invoice_price + $tax) - $discount;
+		$inputs['discount'] = $this->input->post("discount");
+		if ($this->invoice_model->save($inputs, $invoice_id)) {
+			$this->session->set_flashdata("msg_success", "Discount Add Successfully");
+			redirect(ADMIN_DIR . "data_correction");
+		} else {
+			$this->session->set_flashdata("msg_success", "DB Error While Discount Entry");
+			redirect(ADMIN_DIR . "data_correction");
+		}
+	}
+
+	public function undo_cancelation($invoice_id)
+	{
+
+		$invoice_id = (int) $invoice_id;
+		$query = "UPDATE invoices
+			          SET is_deleted=0, 
+					  cancel_reason= NULL,  
+					  cancel_reason_detail= NULL 
+					  WHERE invoice_id= $invoice_id";
+		if ($this->db->query($query)) {
+			$this->session->set_flashdata("msg_success", "Receipt Cancellation Undo Successfully.");
+			redirect(ADMIN_DIR . "data_correction");
+		} else {
+			$this->session->set_flashdata("msg_error", "DB Error try again.");
+			redirect(ADMIN_DIR . "data_correction");
+		}
+	}
 }

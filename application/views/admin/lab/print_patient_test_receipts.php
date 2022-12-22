@@ -144,7 +144,10 @@
                       <td>Patient Name: </td>
                       <td><?php echo trim(ucwords(strtolower($invoice_detail->patient_name))); ?></td>
                     </tr>
-
+                    <tr>
+                      <th>History No: </th>
+                      <td><?php echo $invoice_detail->history_file_no; ?></td>
+                    </tr>
                     <tr>
                       <td>Age/Sex:</td>
                       <td><?php echo @$invoice_detail->patient_age; ?> Y / <?php echo $invoice_detail->patient_gender; ?></td>

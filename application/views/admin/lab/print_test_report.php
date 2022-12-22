@@ -119,6 +119,10 @@
                     <div style="bor der: 1px dashed black; margin-top: 5px; padding:5px">
                       <table style="text-align: left; width:100%; font-size: 12px !important; color:black;">
                         <tr>
+                          <th>Patient ID: <?php echo $invoice_detail->patient_id; ?></th>
+                          <td>History No: <?php echo $invoice_detail->history_file_no; ?></td>
+                        </tr>
+                        <tr>
                           <th>Patient Name: </th>
                           <td><?php echo trim(ucwords(strtolower($invoice_detail->patient_name))); ?></td>
                         </tr>
@@ -142,10 +146,9 @@
                     <div style="bor der: 1px dashed black; margin-top: 5px; padding:5px;">
                       <table style="text-align: left; width:100%; font-size: 12px !important; color:black">
                         <tr>
-                          <th>Patient ID: <?php echo $invoice_detail->patient_id; ?></th>
-                          <td>Invoice No: <?php echo $invoice_detail->invoice_id; ?></td>
+                          <th>Invoice No: </th>
+                          <td> <?php echo $invoice_detail->invoice_id; ?></td>
                         </tr>
-
 
                         <tr>
                           <th>Refereed By:</th>
