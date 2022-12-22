@@ -28,6 +28,10 @@
                     <th><input type="text" name="test_name" value="<?php echo $test->test_name; ?>" id="test_name" class="form-control" style="" required="required" title="Test Name" placeholder="Test Name"></th>
                 </tr>
                 <tr>
+                    <th>Result Suffix</th>
+                    <th><input type="text" name="result_suffix" value="<?php echo $test->result_suffix; ?>" id="result_suffix" class="form-control" style="" title="Result Suffix" placeholder="Result Suffix"></th>
+                </tr>
+                <tr>
                     <th>Unit</th>
                     <td><input type="text" value="<?php echo $test->unit; ?>" name="test_unit" id="test_unit" class="form-control"></td>
                 </tr>

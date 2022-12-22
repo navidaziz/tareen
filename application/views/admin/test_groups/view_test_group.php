@@ -122,6 +122,7 @@
                                  <tr>
                                      <th>#</th>
                                      <th>Test(s)</th>
+                                     <th> Result Suffix</th>
                                      <th>Unit</th>
                                      <th style="width: 300px;">Normal Value(s)</th>
                                      <!-- <th>Test Nature</th> -->
@@ -137,6 +138,7 @@
                                      <tr>
                                          <td><?php echo $count++; ?></td>
                                          <td> <?php echo $test_group_test->test_name; ?> </td>
+                                         <td><?php echo $test_group_test->result_suffix; ?></td>
                                          <td>
                                              <?php echo $test_group_test->unit; ?>
                                          </td>
@@ -194,6 +196,10 @@
                      <tr>
                          <th>Test</th>
                          <th><input type="text" name="test_name" value="" id="test_name" class="form-control" style="" required="required" title="Test Name" placeholder="Test Name"></th>
+                     </tr>
+                     <tr>
+                         <th>Result Suffix</th>
+                         <th><input type="text" name="result_suffix" value="" id="result_suffix" class="form-control" style="" title="Result Suffix" placeholder="Result Suffix"></th>
                      </tr>
                      <tr>
                          <th>Unit</th>

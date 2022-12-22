@@ -218,7 +218,7 @@
                       <?php } ?>
                       <tr>
                         <th><?php echo $patient_test->test_name; ?></th>
-                        <th> <?php echo $patient_test->test_result; ?> </th>
+                        <th> <?php echo $patient_test->test_result; ?> <?php echo $patient_test->result_suffix; ?></th>
 
                         <th style="text-align: center;"> <small> <?php echo $patient_test->unit; ?> </small></th>
 

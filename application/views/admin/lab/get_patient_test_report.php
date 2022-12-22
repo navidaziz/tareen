@@ -110,7 +110,7 @@
           <tr>
             <td><?php echo $count++; ?></td>
             <td><?php echo $patient_test->test_name; ?></td>
-            <td> <?php echo $patient_test->test_result; ?> </td>
+            <td> <?php echo $patient_test->test_result; ?> <strong><?php echo $patient_test->result_suffix; ?></strong></td>
             <td><?php echo $patient_test->test_normal_value; ?></td>
             <td><?php echo $patient_test->remarks; ?> </td>
           </tr>

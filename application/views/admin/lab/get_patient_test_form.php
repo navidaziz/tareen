@@ -117,7 +117,9 @@
             <tr>
               <td><?php echo $count++; ?></td>
               <td><?php echo $patient_test->test_name; ?></td>
-              <td><input class="test_value_input" onkeyup="update_test_value('<?php echo $patient_test->patient_test_id; ?>')" type="text" id="test_<?php echo $patient_test->patient_test_id; ?>_value" value="<?php echo $patient_test->test_result; ?>" name="test_values[<?php echo $patient_test->patient_test_id; ?>]" /></td>
+              <td><input class="test_value_input" onkeyup="update_test_value('<?php echo $patient_test->patient_test_id; ?>')" type="text" id="test_<?php echo $patient_test->patient_test_id; ?>_value" value="<?php echo $patient_test->test_result; ?>" name="test_values[<?php echo $patient_test->patient_test_id; ?>]" />
+                <strong><?php echo $patient_test->result_suffix; ?></strong>
+              </td>
               <td><?php echo $patient_test->unit; ?></td>
               <td><?php echo $patient_test->test_normal_value; ?></td>
               <!-- <td><input type="text" onkeyup="update_test_remarks('<?php echo $patient_test->patient_test_id; ?>')" id="test_<?php echo $patient_test->patient_test_id; ?>_remark" value="<?php echo $patient_test->remarks; ?>" /></td> -->

@@ -72,6 +72,7 @@ class Test_model extends MY_Model
 
         $inputs["normal_values"]  =  $this->input->post("normal_values");
         $inputs["unit"]  =  $this->input->post("test_unit");
+        $inputs["result_suffix"]  =  $this->input->post("result_suffix");
 
         return $this->test_model->save($inputs);
     }
@@ -94,6 +95,7 @@ class Test_model extends MY_Model
 
         $inputs["normal_values"]  =  $this->input->post("normal_values");
         $inputs["unit"]  =  $this->input->post("test_unit");
+        $inputs["result_suffix"]  =  $this->input->post("result_suffix");
 
         return $this->test_model->save($inputs, $test_id);
     }
