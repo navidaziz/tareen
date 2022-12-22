@@ -365,7 +365,7 @@ echo form_open_multipart(ADMIN_DIR . "reception/save_data", $add_form_attr);
           foreach ($appinments as $appinment) {
 
           ?>
-            <input class="appointments" style="display: inline;" name="test_group_id[]" id="TG_<?php echo $appinment->test_group_id; ?>" onclick="set_price('<?php echo $appinment->test_group_id; ?>', '<?php echo $appinment->test_group_name; ?>', '<?php echo $appinment->test_price; ?>', '<?php echo $appinment->test_time; ?>')" type="radio" value="<?php echo $appinment->test_group_id; ?>" />
+            <input class="appointments" style="display: inline;" name="test_group_id[]" id="TG_<?php echo $appinment->test_group_id; ?>" onclick="set_price('<?php echo $appinment->test_group_id; ?>', '<?php echo $appinment->test_group_name; ?>', '<?php echo $appinment->test_price; ?>', '<?php echo $appinment->test_time; ?>', '1')" type="radio" value="<?php echo $appinment->test_group_id; ?>" />
             <strong><?php echo $appinment->test_group_name; ?></strong> <span style="margin-left: 5px;"></span>
             <?php if ($appinment->test_group_id == 4) {
               $query = "SELECT `invoices`.`today_count` FROM invoices WHERE `invoices`.`opd_doctor` = 4 and `invoices`.`category_id` = 5 
@@ -459,7 +459,7 @@ echo form_open_multipart(ADMIN_DIR . "reception/save_data", $add_form_attr);
                 <?php foreach ($test_groups as $test_group) { ?>
                   <tr>
                     <td>
-                      <input class="test_list" style="display: inline;" name="test_group_id[]" id="TG_<?php echo $test_group->test_group_id; ?>" onclick="set_price('<?php echo $test_group->test_group_id; ?>', '<?php echo $test_group->test_group_name; ?>', '<?php echo $test_group->test_price; ?>', '<?php echo $test_group->test_time; ?>')" type="checkbox" value="<?php echo $test_group->test_group_id; ?>" />
+                      <input class="test_list" style="display: inline;" name="test_group_id[]" id="TG_<?php echo $test_group->test_group_id; ?>" onclick="set_price('<?php echo $test_group->test_group_id; ?>', '<?php echo $test_group->test_group_name; ?>', '<?php echo $test_group->test_price; ?>', '<?php echo $test_group->test_time; ?>', '0')" type="checkbox" value="<?php echo $test_group->test_group_id; ?>" />
                     </td>
                     <!-- <td><?php echo $test_group->test_group_id; ?></td> -->
                     <td><strong style="margin-left:2px;">
@@ -786,9 +786,9 @@ echo form_open_multipart(ADMIN_DIR . "reception/save_data", $add_form_attr);
   var test_total_price = 0;
 
 
-  function set_price(test_group_id, test_group_name, test_price, test_time) {
+  function set_price(test_group_id, test_group_name, test_price, test_time, main) {
 
-    if (test_group_id <= 4) {
+    if (main == 1) {
       test_total_price = 0;
       prices = [];
       $('#validate').val("");
@@ -912,7 +912,7 @@ echo form_open_multipart(ADMIN_DIR . "reception/save_data", $add_form_attr);
     <?php
     $query = "SELECT * FROM `test_groups` WHERE  category_id=5 and test_group_id=4";
     $appinment = $this->db->query($query)->row(); ?>
-    set_price('<?php echo $appinment->test_group_id; ?>', '<?php echo $appinment->test_group_name; ?>', '<?php echo $appinment->test_price; ?>', '<?php echo $appinment->test_time; ?>');
+    set_price('<?php echo $appinment->test_group_id; ?>', '<?php echo $appinment->test_group_name; ?>', '<?php echo $appinment->test_price; ?>', '<?php echo $appinment->test_time; ?>', '1');
     $("#singleToken").prop("checked", true);
     $('#second_patient_for').hide();
     $('.patient2').attr('required', false);
@@ -920,7 +920,7 @@ echo form_open_multipart(ADMIN_DIR . "reception/save_data", $add_form_attr);
   }
 
   function multiple_token() {
-    set_price('<?php echo $appinment->test_group_id; ?>', '<?php echo $appinment->test_group_name; ?>', '<?php echo ($appinment->test_price * 2); ?>', '<?php echo $appinment->test_time; ?>');
+    set_price('<?php echo $appinment->test_group_id; ?>', '<?php echo $appinment->test_group_name; ?>', '<?php echo ($appinment->test_price * 2); ?>', '<?php echo $appinment->test_time; ?>', '1');
     $("#multipleToken").prop("checked", true);
     $('#second_patient_for').show();
     $('.patient2').attr('required', true);
