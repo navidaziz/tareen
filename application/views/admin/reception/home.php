@@ -814,7 +814,7 @@ echo form_open_multipart(ADMIN_DIR . "reception/save_data", $add_form_attr);
       }
 
     } else {
-      <?php $query = "SELECT * FROM `test_groups` WHERE category_id=5";
+      <?php $query = "SELECT * FROM `test_groups` WHERE category_id=5 and status=1";
       $test_group_names = $this->db->query($query)->result();
       foreach ($test_group_names as $test_group_name) {
       ?>
