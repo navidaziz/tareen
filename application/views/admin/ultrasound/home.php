@@ -96,21 +96,9 @@ if (!in_array($current_action_id, $allowed_modules)) { ?>
                   <td>
 
                     <?php
-                    $query = "SELECT
-                    `test_groups`.`test_group_name`,
-                    `test_groups`.`test_group_id`
-                  FROM
-                  `invoice_test_groups`,
-                  `test_groups` 
-                  WHERE `invoice_test_groups`.`test_group_id` = `test_groups`.`test_group_id`
-                  AND `invoice_test_groups`.`invoice_id` = '" . $test->invoice_id . "'";
-                    $query_result = $this->db->query($query);
-                    $patient_tests = $query_result->result();
-                    $tests = '';
-                    foreach ($patient_tests as $patient_test) {
-                      $tests .= $patient_test->test_group_name . ',';
-                    }
-                    echo $tests;
+                    $query = "SELECT test_group_name FROM test_groups WHERE test_group_id = '" . $test->opd_doctor . "'";
+                    $opd_doctor = $this->db->query($query)->result()[0]->test_group_name;
+                    echo $opd_doctor . "-" . $test->today_count;
                     ?>
 
                   </td>
@@ -186,23 +174,10 @@ if (!in_array($current_action_id, $allowed_modules)) { ?>
                   </td>
                   <!-- <td><?php echo $test->patient_mobile_no; ?></td> -->
                   <td>
-
                     <?php
-                    $query = "SELECT
-                    `test_groups`.`test_group_name`,
-                    `test_groups`.`test_group_id`
-                  FROM
-                  `invoice_test_groups`,
-                  `test_groups` 
-                  WHERE `invoice_test_groups`.`test_group_id` = `test_groups`.`test_group_id`
-                  AND `invoice_test_groups`.`invoice_id` = '" . $test->invoice_id . "'";
-                    $query_result = $this->db->query($query);
-                    $patient_tests = $query_result->result();
-                    $tests = '';
-                    foreach ($patient_tests as $patient_test) {
-                      $tests .= $patient_test->test_group_name . ',';
-                    }
-                    echo $tests;
+                    $query = "SELECT test_group_name FROM test_groups WHERE test_group_id = '" . $test->opd_doctor . "'";
+                    $opd_doctor = $this->db->query($query)->result()[0]->test_group_name;
+                    echo $opd_doctor . "-" . $test->today_count;
                     ?>
 
                   </td>
@@ -260,24 +235,12 @@ if (!in_array($current_action_id, $allowed_modules)) { ?>
                   </td>
                   <!-- <td><?php echo $test->patient_mobile_no; ?></td> -->
                   <td>
-
                     <?php
-                    $query = "SELECT
-                    `test_groups`.`test_group_name`,
-                    `test_groups`.`test_group_id`
-                  FROM
-                  `invoice_test_groups`,
-                  `test_groups` 
-                  WHERE `invoice_test_groups`.`test_group_id` = `test_groups`.`test_group_id`
-                  AND `invoice_test_groups`.`invoice_id` = '" . $test->invoice_id . "'";
-                    $query_result = $this->db->query($query);
-                    $patient_tests = $query_result->result();
-                    $tests = '';
-                    foreach ($patient_tests as $patient_test) {
-                      $tests .= $patient_test->test_group_name . ',';
-                    }
-                    echo $tests;
+                    $query = "SELECT test_group_name FROM test_groups WHERE test_group_id = '" . $test->opd_doctor . "'";
+                    $opd_doctor = $this->db->query($query)->result()[0]->test_group_name;
+                    echo $opd_doctor . "-" . $test->today_count;
                     ?>
+
 
                   </td>
                   <!-- <td><?php echo $test->price; ?></td>
