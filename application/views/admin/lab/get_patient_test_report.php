@@ -118,7 +118,8 @@
       </table>
     <?php  } ?>
     <div style="text-align: left;"><strong>Remarks:</strong>
-      <p style="border: 1px dashed #ddd; border-radius: 5px; padding: 5px; min-height: 50px;"><?php echo $invoice_detail->remarks; ?></p>
+      <br />
+      <?php echo $invoice_detail->remarks; ?>
     </div>
     <a target="new" href="<?php echo site_url(ADMIN_DIR . "lab/print_patient_test_report/$invoice_id") ?>" class="btn btn-primary"><i class="fa fa-print" aria-hidden="true"></i> Print Test Report</a>
   </div>

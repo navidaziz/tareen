@@ -77,16 +77,15 @@ if (!in_array($current_action_id, $allowed_modules)) { ?>
             <table class="table table-bordered">
               <thead>
                 <tr>
-                  <th></th>
+                <tr>
+                  <th>#</th>
                   <th>Invoice No</th>
-                  <th>Patient Id</th>
-                  <th>Name</th>
-                  <!-- <th>Mobile</th> -->
+                  <th>Patient ID</th>
+                  <th>Patient Name</th>
+                  <th>Mobile</th>
                   <th>Tests</th>
-                  <!-- <th>Price</th>
-              <th>Discount</th> 
-              <th>Rs:</th>-->
-                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
                 </tr>
               </thead>
               <?php
@@ -96,9 +95,8 @@ if (!in_array($current_action_id, $allowed_modules)) { ?>
                   <td><?php echo $count++; ?> </td>
                   <td><?php echo $test->invoice_id; ?> </td>
                   <td><?php echo $test->patient_id; ?> </td>
-                  <td><?php echo $test->patient_name; ?> <br />
-                  </td>
-                  <!-- <td><?php echo $test->patient_mobile_no; ?></td> -->
+                  <td><?php echo $test->patient_name; ?></td>
+                  <td><?php echo $test->patient_mobile_no; ?></td>
                   <td>
 
                     <?php
@@ -175,16 +173,13 @@ if (!in_array($current_action_id, $allowed_modules)) { ?>
             <table class="table table-bordered">
               <thead>
                 <tr>
-                  <th></th>
+                  <th>#</th>
                   <th>Invoice No</th>
-                  <th>Patient Id</th>
-                  <th>Name</th>
-                  <!-- <th>Mobile</th> -->
+                  <th>Patient ID</th>
+                  <th>Patient Name</th>
+                  <th>Mobile</th>
                   <th>Tests</th>
-                  <!-- <th>Price</th>
-              <th>Discount</th> 
-              <th>Rs:</th>-->
-                  <th>Status</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <?php
@@ -194,9 +189,8 @@ if (!in_array($current_action_id, $allowed_modules)) { ?>
                   <td><?php echo $count++; ?> </td>
                   <td><?php echo $test->invoice_id; ?> </td>
                   <td><?php echo $test->patient_id; ?> </td>
-                  <td><?php echo $test->patient_name; ?> <br />
-                  </td>
-                  <!-- <td><?php echo $test->patient_mobile_no; ?></td> -->
+                  <td><?php echo $test->patient_name; ?></td>
+                  <td><?php echo $test->patient_mobile_no; ?></td>
                   <td>
 
                     <?php
@@ -244,7 +238,7 @@ if (!in_array($current_action_id, $allowed_modules)) { ?>
   <div class="col-md-6">
     <div class="row">
       <div class="col-md-12">
-        <div class="box border blue" id="messenger">
+        <div class="box border blue" id="messenger" style="min-height: 700px;">
           <div class="box-title">
             <h4><i class="fa fa-check"></i>Completed Tests</h4>
           </div>
@@ -254,16 +248,13 @@ if (!in_array($current_action_id, $allowed_modules)) { ?>
             <table class="table table-bordered" id="completed_test_list">
               <thead>
                 <tr>
-                  <th></th>
+                  <th>#</th>
                   <th>Invoice No</th>
-                  <th>Patient Id</th>
-                  <th>Name</th>
-                  <!-- <th>Mobile</th> -->
+                  <th>Patient ID</th>
+                  <th>Patient Name</th>
+                  <th>Mobile</th>
                   <th>Tests</th>
-                  <!-- <th>Price</th>
-              <th>Discount</th> 
-              <th>Rs:</th>-->
-                  <th>Status</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <?php
@@ -276,7 +267,7 @@ if (!in_array($current_action_id, $allowed_modules)) { ?>
                   <td><?php echo $test->patient_name; ?>
 
                   </td>
-                  <!-- <td><?php echo $test->patient_mobile_no; ?></td> -->
+                  <td><?php echo $test->patient_mobile_no; ?></td>
                   <td>
 
                     <?php
@@ -301,15 +292,13 @@ if (!in_array($current_action_id, $allowed_modules)) { ?>
                   <!-- <td><?php echo $test->price; ?></td>
               <td><?php echo $test->discount; ?></td> 
               <td><?php echo $test->total_price; ?></td>-->
-                  <td>
 
-                    <?php if ($test->status == 3) { ?>
-                      <a href="#" onclick="get_patient_test_form('<?php echo $test->invoice_id; ?>')">Edit Result</a>
-                      <span style="margin-left: 10px;"></span>
-                      <a href="#" onclick="get_patient_test_report('<?php echo $test->invoice_id; ?>')">
-                        Report</a>
-                      <!-- <a style="margin-left: 10px;" target="new" href="<?php echo site_url(ADMIN_DIR . "lab/print_patient_test_report/$test->invoice_id") ?>"><i class="fa fa-print" aria-hidden="true"></i> Print</a>
-                <?php  } ?> -->
+                  <td>
+                    <a href="#" onclick="get_patient_test_form('<?php echo $test->invoice_id; ?>')"><i class="fa fa-edit" aria-hidden="true"></i> Edit Result</a>
+                    <a style="margin-left: 10px;" target="new" href="<?php echo site_url(ADMIN_DIR . "lab/print_patient_test_report/$test->invoice_id") ?>"><i class="fa fa-print" aria-hidden="true"></i> Print</a>
+
+                  </td>
+
                   </td>
                 </tr>
               <?php } ?>
