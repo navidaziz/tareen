@@ -87,8 +87,8 @@ echo form_open_multipart(ADMIN_DIR . "reception/save_data", $add_form_attr);
         <table style="width: 100%;">
           <tr>
             <td colspan="2">
-              <div style="padding: 5px;">
-                Search By Filled By Patient ID:
+              <div style="padding: 5px; background-color:lightgray; margin-bottom:10px; border-radius:5px; border:1px solid gray;">
+                <strong> Search By Patient ID: (Old Patient) </strong>
                 <input class="form-control" type="text" id="patientId" name="patientId" value="" placeholder="Patient ID" />
               </div>
             </td>
