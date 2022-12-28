@@ -32,14 +32,14 @@ class Ultrasounds extends Admin_Controller
 		$query = "SELECT test_group_ids FROM users WHERE user_id = '" . $user_id . "'";
 		$test_group_ids = $this->db->query($query)->row()->test_group_ids;
 
-		$where = "`invoices`.`status` IN (1) AND opd_doctor = '" . $test_group_ids . "' AND category_id=5 AND DATE(`invoices`.`created_date`) = DATE(NOW()) AND `is_deleted`=0 ORDER BY `invoices`.`invoice_id` DESC";
+		$where = "`invoices`.`status` IN (1) AND opd_doctor IN (" . $test_group_ids . ") AND category_id=5 AND DATE(`invoices`.`created_date`) = DATE(NOW()) AND `is_deleted`=0 ORDER BY `invoices`.`invoice_id` DESC";
 		$this->data["forwarded_tests"] = $this->invoice_model->get_invoice_list($where, false);
 
 
-		$where = "`invoices`.`status` IN (2) AND opd_doctor = '" . $test_group_ids . "' AND  category_id=5 AND DATE(`invoices`.`created_date`) = DATE(NOW()) ORDER BY `invoices`.`invoice_id` DESC";
+		$where = "`invoices`.`status` IN (2) AND opd_doctor IN(" . $test_group_ids . ") AND  category_id=5 AND DATE(`invoices`.`created_date`) = DATE(NOW()) ORDER BY `invoices`.`invoice_id` DESC";
 		$this->data["inprogress_tests"] = $this->invoice_model->get_invoice_list($where, false);
 
-		$where = "`invoices`.`status` IN (3) AND opd_doctor = '" . $test_group_ids . "' AND category_id=5 AND DATE(`invoices`.`created_date`) = DATE(NOW()) ORDER BY `invoices`.`invoice_id` DESC";
+		$where = "`invoices`.`status` IN (3) AND opd_doctor IN(" . $test_group_ids . ") AND category_id=5 AND DATE(`invoices`.`created_date`) = DATE(NOW()) ORDER BY `invoices`.`invoice_id` DESC";
 		$this->data["completed_tests"] = $this->invoice_model->get_invoice_list($where, false);
 
 
