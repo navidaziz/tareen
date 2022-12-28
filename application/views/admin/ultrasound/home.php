@@ -75,7 +75,7 @@ if (!in_array($current_action_id, $allowed_modules)) { ?>
             </table>
             <hr style="margin-top: -5px;" />
             <table class="table table-bordered">
-              <thead>
+              <thead> 
                 <tr>
                   <th>#</th>
                   <th>Invoice No</th>
