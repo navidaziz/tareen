@@ -128,7 +128,7 @@
       <?php  } ?>
 
 
-      <script src="//cdn.ckeditor.com/4.19.1/standard/ckeditor.js"></script>
+
 
       <div style="text-align: left;"><strong>Ultrasound Report</strong>
         <textarea name="test_remarks" id="test_remarks" class="form-control" style="margin-bottom: 5px;"><?php echo $invoice->remarks; ?></textarea>
@@ -140,7 +140,7 @@
       </script>
       <br />
       <input type="hidden" value="<?php echo $invoice_id; ?>" name="invoice_id" />
-      <input class="btn btn-success" type="submit" value="Complete Test" name="Complete and Save Ultrasound Report" />
+      <input class="btn btn-success" type="submit" value="Save and Complete Ultrasound Report" name="Save and Complete Ultrasound Report" />
     </form>
   </div>
 </div>

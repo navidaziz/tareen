@@ -107,7 +107,9 @@
             <th style="text-align: center;">
               <h4><?php echo $system_global_settings[0]->system_title ?></h4>
               <small><?php echo $system_global_settings[0]->system_sub_title ?> - Phone No. 0000-000000</small>
-              <p style="text-align:center"><strong>Lab Report</strong></p>
+              <p style="text-align:center">
+              <h3>Lab Report</h3>
+              </p>
             </th>
           </tr>
           <tr>
@@ -187,29 +189,32 @@
                   <strong><?php echo $patient_tests_group->test_group_name; ?>
                   </strong>
                 </h5>
+                <?php
 
+                $normal_value = false;
+                foreach ($patient_tests_group->patient_tests as $patient_test) {
+                  if ($patient_test->test_result != '') {
+                    if (trim($patient_test->test_normal_value) != "") {
+                      $normal_value = true;
+                    }
+                  }
+                }
+                ?>
 
                 <table class="table table-bordered" style="text-align: left; font-size:10px">
                   <tr>
                     <!-- <th >#</th> -->
                     <th style="width: 200px;">TEST(s)</th>
                     <th style="width: 200px;">RESULT(s)</th>
-                    <th style="width: 100px;">UNIT(s)</th>
-                    <th style="width: 300px;">NORMALS</th>
+                    <?php if ($normal_value) { ?>
+                      <th style="width: 100px;">UNIT(s)</th>
+                      <th style="width: 300px;">NORMALS</th>
+                    <?php } ?>
                   </tr>
 
 
+
                   <?php
-
-                  $normal_value = false;
-                  foreach ($patient_tests_group->patient_tests as $patient_test) {
-                    if ($patient_test->test_result != '') {
-                      if (trim($patient_test->test_normal_value) != "") {
-                        $normal_value = true;
-                      }
-                    }
-                  }
-
 
                   foreach ($patient_tests_group->patient_tests as $patient_test) { ?>
                     <?php if ($patient_test->test_result != '') { ?>
@@ -219,19 +224,13 @@
                       <tr>
                         <th><?php echo $patient_test->test_name; ?></th>
                         <th> <?php echo $patient_test->test_result; ?> <?php echo $patient_test->result_suffix; ?></th>
+                        <?php if ($normal_value) { ?>
+                          <th style="text-align: center;"> <small> <?php echo $patient_test->unit; ?> </small></th>
 
-                        <th style="text-align: center;"> <small> <?php echo $patient_test->unit; ?> </small></th>
-
-                        <th style="width: 300px;">
-                          <small><?php echo $patient_test->test_normal_value; ?></small>
-                        </th>
-                        <?php //if ($normal_value) { 
-                        ?>
-
-
-                        <?php //}  
-                        ?>
-                        <!-- <td><?php echo $patient_test->remarks; ?> </td> -->
+                          <th style="width: 300px;">
+                            <small><?php echo $patient_test->test_normal_value; ?></small>
+                          </th>
+                        <?php } ?>
                       </tr>
                     <?php } ?>
                   <?php } ?>
@@ -245,9 +244,10 @@
               <br />
               <?php if ($invoice_detail->remarks) { ?>
                 <div style="text-align: left; color:black"><strong>Remarks:</strong>
-                  <p style="border: 1px dashed #ddd; border-radius: 5px; padding: 5px;">
-                    <?php echo $invoice_detail->remarks; ?>
-                  </p>
+                  <br />
+                  <?php echo $invoice_detail->remarks; ?>
+
+
                 </div>
               <?php } ?>
             </td>

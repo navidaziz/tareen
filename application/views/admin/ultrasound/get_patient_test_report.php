@@ -126,8 +126,10 @@
         <?php } ?>
       </table>
     <?php  } ?>
-    <div style="text-align: left;"><strong>Remarks:</strong>
-      <p style="border: 1px dashed #ddd; border-radius: 5px; padding: 5px; min-height: 50px;"><?php echo $invoice_detail->remarks; ?></p>
+    <div style="text-align: left; min-height:500px"><strong>Ultrasound Report:</strong>
+
+      <?php echo $invoice_detail->remarks; ?>
+
     </div>
     <a target="new" href="<?php echo site_url(ADMIN_DIR . "ultrasounds/print_patient_test_report/$invoice_id") ?>" class="btn btn-primary"><i class="fa fa-print" aria-hidden="true"></i> Print Ultrasound Report</a>
   </div>

@@ -39,7 +39,7 @@ if (!in_array($current_action_id, $allowed_modules)) { ?>
       <div class="col-md-12">
         <div class="box border blue" id="messenger">
           <div class="box-title">
-            <h4><i class="fa fa-forward"></i>Forwarded Ultrasound</h4>
+            <h4><i class="fa fa-forward"></i>Forwarded Ultrasounds List</h4>
           </div>
           <div class="box-body">
             <table style="width: 100%;">
@@ -78,33 +78,30 @@ if (!in_array($current_action_id, $allowed_modules)) { ?>
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Name</th>
-                  <!-- <th>Mobile</th> -->
+                  <th>Invoice No</th>
+                  <th>Patient ID</th>
+                  <th>Patient Name</th>
+                  <th>Mobile</th>
                   <th>Ultrasound</th>
-                  <!-- <th>Price</th>
-              <th>Discount</th> 
-              <th>Rs:</th>-->
-                  <th>Status</th>
+                  <th>Action</th>
                 </tr>
               </thead>
-              <?php foreach ($forwarded_tests as $test) { ?>
+              <?php
+              $count = 1;
+              foreach ($forwarded_tests as $test) { ?>
                 <tr style="background-color: #E9F1FC;">
+                  <td><?php echo $count++; ?> </td>
                   <td><?php echo $test->invoice_id; ?> </td>
-                  <td><?php echo $test->patient_name; ?> <br />
-                  </td>
-                  <!-- <td><?php echo $test->patient_mobile_no; ?></td> -->
+                  <td><?php echo $test->patient_id; ?> </td>
+                  <td><?php echo $test->patient_name; ?> </td>
+                  <td><?php echo $test->patient_mobile_no; ?></td>
                   <td>
-
                     <?php
                     $query = "SELECT test_group_name FROM test_groups WHERE test_group_id = '" . $test->opd_doctor . "'";
                     $opd_doctor = $this->db->query($query)->result()[0]->test_group_name;
                     echo $opd_doctor . "-" . $test->today_count;
                     ?>
-
                   </td>
-                  <!-- <td><?php echo $test->price; ?></td>
-              <td><?php echo $test->discount; ?></td> 
-              <td><?php echo $test->total_price; ?></td> -->
                   <td>
                     <?php if ($test->status == 1) {
 
@@ -149,7 +146,7 @@ if (!in_array($current_action_id, $allowed_modules)) { ?>
       <div class="col-md-12">
         <div class="box border blue" id="messenger">
           <div class="box-title">
-            <h4><i class="fa fa-clock-o"></i>Inprogress Ultrasound</h4>
+            <h4><i class="fa fa-clock-o"></i>Inprogress Ultrasounds List</h4>
           </div>
 
 
@@ -158,34 +155,31 @@ if (!in_array($current_action_id, $allowed_modules)) { ?>
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Name</th>
-                  <!-- <th>Mobile</th> -->
+                  <th>Invoice No</th>
+                  <th>Patient ID</th>
+                  <th>Patient Name</th>
+                  <th>Mobile</th>
                   <th>Ultrasound</th>
-                  <!-- <th>Price</th>
-              <th>Discount</th> 
-              <th>Rs:</th>-->
-                  <th>Status</th>
+                  <th>Action</th>
                 </tr>
               </thead>
-              <?php foreach ($inprogress_tests as $test) { ?>
+              <?php
+              $count = 1;
+              foreach ($inprogress_tests as $test) { ?>
                 <tr style="background-color: #ffe8e7">
+                  <td><?php echo $count++; ?> </td>
                   <td><?php echo $test->invoice_id; ?> </td>
-                  <td><?php echo $test->patient_name; ?> <br />
-                  </td>
-                  <!-- <td><?php echo $test->patient_mobile_no; ?></td> -->
+                  <td><?php echo $test->patient_id; ?> </td>
+                  <td><?php echo $test->patient_name; ?> </td>
+                  <td><?php echo $test->patient_mobile_no; ?></td>
                   <td>
                     <?php
                     $query = "SELECT test_group_name FROM test_groups WHERE test_group_id = '" . $test->opd_doctor . "'";
                     $opd_doctor = $this->db->query($query)->result()[0]->test_group_name;
                     echo $opd_doctor . "-" . $test->today_count;
                     ?>
-
                   </td>
-                  <!-- <td><?php echo $test->price; ?></td>
-              <td><?php echo $test->discount; ?></td> 
-              <td><?php echo $test->total_price; ?></td>-->
                   <td>
-
                     <?php if ($test->status == 2) { ?>
                       <a href="javascript:get_patient_test_form('<?php echo $test->invoice_id; ?>')">Add Result</a>
 
@@ -207,32 +201,31 @@ if (!in_array($current_action_id, $allowed_modules)) { ?>
   <div class="col-md-6">
     <div class="row">
       <div class="col-md-12">
-        <div class="box border blue" id="messenger">
+        <div class="box border blue" id="messenger" style="min-height: 700px;">
           <div class="box-title">
-            <h4><i class="fa fa-check"></i>Completed Ultrasound</h4>
+            <h4><i class="fa fa-check"></i>Completed Ultrasounds List</h4>
           </div>
 
 
           <div class="box-body">
-            <table class="table table-bordered" id="completed_test_list">
+            <table class="table table-bordered" id="completed_test_list" style="font-size: 12px;">
               <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Name</th>
-                  <!-- <th>Mobile</th> -->
-                  <th>Ultrasound</th>
-                  <!-- <th>Price</th>
-              <th>Discount</th> 
-              <th>Rs:</th>-->
-                  <th>Status</th>
-                </tr>
+                <th>#</th>
+                <th>Invoice No</th>
+                <th>Patient ID</th>
+                <th>Patient Name</th>
+                <!-- <th>Mobile</th> -->
+                <th>Ultrasound</th>
+                <th>Action</th>
               </thead>
-              <?php foreach ($completed_tests as $test) {  ?>
+              <?php
+              $count = 1;
+              foreach ($completed_tests as $test) {  ?>
                 <tr style="background-color: #F0FFF0;">
+                  <td><?php echo $count++; ?> </td>
                   <td><?php echo $test->invoice_id; ?> </td>
-                  <td><?php echo $test->patient_name; ?>
-
-                  </td>
+                  <td><?php echo $test->patient_id; ?> </td>
+                  <td><?php echo $test->patient_name; ?> </td>
                   <!-- <td><?php echo $test->patient_mobile_no; ?></td> -->
                   <td>
                     <?php
@@ -240,21 +233,15 @@ if (!in_array($current_action_id, $allowed_modules)) { ?>
                     $opd_doctor = $this->db->query($query)->result()[0]->test_group_name;
                     echo $opd_doctor . "-" . $test->today_count;
                     ?>
-
-
                   </td>
-                  <!-- <td><?php echo $test->price; ?></td>
-              <td><?php echo $test->discount; ?></td> 
-              <td><?php echo $test->total_price; ?></td>-->
+
                   <td>
 
                     <?php if ($test->status == 3) { ?>
-                      <a href="javascript:get_patient_test_form('<?php echo $test->invoice_id; ?>');">Edit Result</a>
+                      <a href="javascript:get_patient_test_form('<?php echo $test->invoice_id; ?>');"><i class="fa fa-edit" aria-hidden="true"></i> Edit</a>
                       <span style="margin-left: 10px;"></span>
-                      <a href="javascript:get_patient_test_report('<?php echo $test->invoice_id; ?>')">
-                        <i class="fa fa-eye" aria-hidden="true"></i> Report</a>
-                      <!-- <a style="margin-left: 10px;" target="new" href="<?php echo site_url(ADMIN_DIR . "lab/print_patient_test_report/$test->invoice_id") ?>"><i class="fa fa-print" aria-hidden="true"></i> Print</a>
-                <?php  } ?> -->
+                      <a target="_blank" href="<?php echo site_url(ADMIN_DIR . 'ultrasounds/print_patient_test_report/' . $test->invoice_id); ?>"> <i class="fa fa-print" aria-hidden="true"></i> Report</a>
+                    <?php  } ?>
                   </td>
                 </tr>
               <?php } ?>
@@ -440,4 +427,6 @@ if (!in_array($current_action_id, $allowed_modules)) { ?>
     });
   });
 </script>
+
+<!-- <script src="//cdn.ckeditor.com/4.19.1/standard/ckeditor.js"></script> -->
 <?php $this->load->view(ADMIN_DIR . "reception/reception_footer"); ?>
