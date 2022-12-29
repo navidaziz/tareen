@@ -100,13 +100,36 @@
   <page size='A4'>
 
     <div style="padding-left: 40px; padding-right: 40px; padding-top:0px !important;" contenteditable="true">
-
       <table style="width: 100%;" style="color:black">
         <thead>
           <tr>
             <th style="text-align: center;">
-              <h4><?php echo $system_global_settings[0]->system_title ?></h4>
-              <small><?php echo $system_global_settings[0]->system_sub_title ?> - Phone No. 0000-000000</small>
+              <div style=" width:100%">
+                <table class="table" style="border: 0px !important;">
+                  <tr>
+                    <td style="padding-top: 10px;width: 90px !important;">
+                      <img src="<?php echo site_url("assets/uploads/" . $system_global_settings[0]->sytem_admin_logo); ?>" alt="<?php echo $system_global_settings[0]->system_title ?>" title="<?php echo $system_global_settings[0]->system_title ?>" style="width:80px !important" />
+                    </td>
+                    <td style="vertical-align: top; text-align:left; ">
+                      <h3 style="color:black; font-weight: bold"><?php echo $system_global_settings[0]->system_title ?> </h3>
+                      <h5 style="color:black; font-weight: bold"><?php echo $system_global_settings[0]->system_sub_title ?></h5>
+
+                    </td>
+                    <td style="text-align:left;">
+                      <h5 style="color:black; line-height:1.3em">
+                        Phone No: <?php echo $system_global_settings[0]->phone_number ?><br />
+                        Mobile No: <?php echo $system_global_settings[0]->mobile_number ?><br />
+                        Email: <?php echo $system_global_settings[0]->email_address; ?></li><br />
+                      </h5>
+                      </ul>
+
+                    </td>
+                  </tr>
+
+                </table>
+              </div>
+
+
               <p style="text-align:center">
               <h3>Lab Report</h3>
               </p>
@@ -275,7 +298,8 @@
 
               <p class="divFooter" style="text-align: right;">
                 <b><?php echo $user_data->user_title; ?> (<?php echo $user_data->role_title; ?>)</b>
-                <br />Tareen Infertility & Impotence Center Peshawar
+                <br />Tareen Infertility & Impotence Center
+                <br />Peshawar
               </p>
 
               <p style="text-align: center;">

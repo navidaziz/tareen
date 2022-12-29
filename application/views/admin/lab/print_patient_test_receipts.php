@@ -90,7 +90,9 @@
 
               <tr>
                 <td style="text-align: center; font-weight: bold !important;">
-                  <h4 style="font-weight: bold !important;">Tareen Infertility & Impotence Center Peshawar</h4>
+                  <img src="<?php echo site_url("assets/uploads/" . $system_global_settings[0]->sytem_admin_logo); ?>" alt="<?php echo $system_global_settings[0]->system_title ?>" title="<?php echo $system_global_settings[0]->system_title ?>" style="width:50px !important" />
+                  <h4 style="font-weight: bold !important;"><?php echo $system_global_settings[0]->system_title ?></h4>
+
                   <table class="table">
                     <tr>
                       <td>RECEIPT NO: <?php echo $invoice_detail->invoice_id; ?></td>
