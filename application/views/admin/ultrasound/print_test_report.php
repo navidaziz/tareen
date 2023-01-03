@@ -189,6 +189,10 @@
       page-break-after: always;
     }
 
+    .report_remarks>p {
+      font-size: 20px;
+    }
+
     @page {
       margin: 20mm
     }
@@ -216,7 +220,7 @@
 <body>
   <page size='A4'>
 
-    <div class="print-page-header" style="background-color: rgb(211, 211, 211) !important;">
+    <div class="print-page-header" style="background-color: rgb(229, 228, 226) !important;">
       <table style="width:100%">
         <tr>
           <td style="padding-top: 10px;width: 90px !important;">
@@ -227,14 +231,21 @@
             <h6 style="color:black; font-weight: bold"><?php echo $system_global_settings[0]->system_sub_title ?></h6>
 
           </td>
-          <td style="text-align:left; vertical-align: top;">
-            <h4 style="color:black; "><strong>
-                Phone No: <?php echo $system_global_settings[0]->phone_number ?><br />
-                Mobile No: <?php echo $system_global_settings[0]->mobile_number ?><br />
-                Email: <?php echo $system_global_settings[0]->email_address; ?>
-              </strong>
-            </h4>
-            </ul>
+          <td style="text-align:left; vertical-align: middle;">
+            <table style="font-size: smaller;">
+              <tr>
+                <td>Phone No: </td>
+                <td><strong><?php echo str_replace(",", " - ", $system_global_settings[0]->phone_number) ?></strong></td>
+              </tr>
+              <tr>
+                <td>Mobile No: </td>
+                <td><strong><?php echo str_replace(",", " - ", $system_global_settings[0]->mobile_number) ?></strong></td>
+              </tr>
+              <tr>
+                <td>Email:</td>
+                <td><strong><?php echo $system_global_settings[0]->email_address; ?></strong></td>
+              </tr>
+            </table>
 
           </td>
         </tr>
@@ -252,7 +263,7 @@
             <th style="text-align: center;">
               <div class="print-page-header-space"></div>
               <p style="text-align:center">
-              <h3 style="color:red"><?php echo $title; ?></h3>
+              <h4 style="color:black; font-weight: bold"><?php echo $title; ?></h4>
               </p>
             </th>
           </tr>
@@ -290,6 +301,7 @@
                           <td><?php echo trim(ucwords(strtolower($invoice_detail->patient_address))); ?></td>
                         </tr>
                       </table>
+
                     </div>
                   </td>
                   <td style="width: 20%;"></td>
@@ -322,38 +334,38 @@
                   </td>
                 </tr>
               </table>
+              <hr />
+              <div class="report_remarks">
+                <?php if ($invoice_detail->remarks) { ?>
 
-              <br />
-              <?php if ($invoice_detail->remarks) { ?>
+                  <?php echo $invoice_detail->remarks; ?>
+              </div>
+            <?php } ?>
+            <br />
+            <br />
+            <br />
+            <?php
 
-                <?php echo $invoice_detail->remarks; ?>
+            $query = "SELECT `test_report_by` FROM `invoices` WHERE `invoice_id`= '" . $invoice_detail->invoice_id . "' ";
+            $lab_technician_id = $this->db->query($query)->result()[0]->test_report_by;
 
-              <?php } ?>
-              <br />
-              <br />
-              <br />
-              <?php
-
-              $query = "SELECT `test_report_by` FROM `invoices` WHERE `invoice_id`= '" . $invoice_detail->invoice_id . "' ";
-              $lab_technician_id = $this->db->query($query)->result()[0]->test_report_by;
-
-              $query = "SELECT
+            $query = "SELECT
                   `roles`.`role_title`,
                   `users`.`user_title`  
               FROM `roles`,
               `users` 
               WHERE `roles`.`role_id` = `users`.`role_id`
               AND `users`.`user_id`='" . $lab_technician_id . "'";
-              $user_data = $this->db->query($query)->result()[0];
-              ?>
-              <div style="padding-left: 40px; padding-right: 40px; padding-top:0px !important; " contenteditable="true">
-                <p class="divFooter" style="text-align: right;">
-                  <b><?php echo $user_data->user_title; ?> (<?php echo $user_data->role_title; ?>)</b>
-                  <br />
-                  <?php echo $system_global_settings[0]->system_title ?><br />Peshawar
-                </p>
-              </div>
-              <br />
+            $user_data = $this->db->query($query)->result()[0];
+            ?>
+            <div style="padding-left: 40px; padding-right: 40px; padding-top:0px !important; " contenteditable="true">
+              <p class="divFooter" style="text-align: right;">
+                <b><?php echo $user_data->user_title; ?> (<?php echo $user_data->role_title; ?>)</b>
+                <br />
+                <?php echo $system_global_settings[0]->system_title ?><br />Peshawar
+              </p>
+            </div>
+            <br />
 
             </td>
           </tr>
@@ -372,11 +384,12 @@
         </tfoot>
       </table>
     </div>
-    <div class="page-footer" style="background-color: rgb(211, 211, 211) !important; border:1px solid rgb(169,169,169)">
+    <div class="page-footer" style="background-color: rgb(229, 228, 226) !important; border:1px solid rgb(229, 228, 226)">
 
 
       <p class="fixed-footer" style="text-align: center; background:#F9F9F9;">
-        <?php echo $system_global_settings[0]->address ?>
+        <strong><?php echo $system_global_settings[0]->address ?></strong>
+
         <br />
         <small>Print @ <?php echo date("d M, Y h:m:s A"); ?>
           by

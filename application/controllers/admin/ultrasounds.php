@@ -255,6 +255,7 @@ class Ultrasounds extends Admin_Controller
 		$reported_date = date('Y-m-d H:i:s');
 		$invoice_id = (int) $this->input->post("invoice_id");
 		$remarks = $this->db->escape($this->input->post("test_remarks"));
+
 		$query = "UPDATE `invoices` 
 				SET `status`='3'
 				, `remarks`= $remarks
