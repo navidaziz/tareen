@@ -24,10 +24,8 @@
   <style>
     body {
       background: rgb(204, 204, 204);
-      color: black;
 
     }
-
 
     page {
       background: white;
@@ -75,7 +73,6 @@
         margin: 0;
         box-shadow: 0;
         color: black;
-
       }
 
 
@@ -96,172 +93,50 @@
       font-size: 12px !important;
       color: black;
     }
-
-    /* Styles go here */
-    @media screen {
-      .print-page-header {
-        height: auto;
-        display: none;
-      }
-    }
-
-
-
-
-    @media screen {
-      .page-footer {
-        height: 50px;
-        display: none;
-      }
-    }
-
-
-
-    @media print {
-      .page-footer {
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-        border-top: 1px solid gray;
-        /* for demo */
-        content: counter(page) " of " counter(pages);
-        /* for demo */
-      }
-
-      .page-footer-space {
-        height: 80px;
-
-      }
-    }
-
-    @media screen {
-      .page-footer {
-        position: relative;
-
-        width: 100%;
-        border-top: 1px solid gray;
-        /* for demo */
-        display: block;
-        /* for demo */
-      }
-
-      .page-footer-space {
-        height: 80px;
-        display: none;
-      }
-    }
-
-    @media print {
-      .print-page-header {
-        position: fixed;
-        top: 0mm;
-        width: 100%;
-        background: yellow;
-        /* for demo */
-        /* for demo */
-      }
-
-      .print-page-header-space {
-        height: 90px;
-      }
-    }
-
-    @media screen {
-      .print-page-header {
-        position: relative;
-        top: 0mm;
-        width: 100%;
-        display: block;
-        /* for demo */
-        /* for demo */
-      }
-
-      .print-page-header-space {
-        height: 90px;
-        display: none;
-      }
-    }
-
-
-
-
-    .page {
-      page-break-after: always;
-    }
-
-    @page {
-      margin: 20mm
-    }
-
-    @media print {
-      thead {
-        display: table-header-group;
-      }
-
-      tfoot {
-        display: table-footer-group;
-      }
-
-      button {
-        display: none;
-      }
-
-      body {
-        margin: 0;
-      }
-    }
   </style>
 </head>
 
 <body>
   <page size='A4'>
 
-    <div class="print-page-header" style="background-color: rgb(211, 211, 211) !important;">
-      <table style="width:100%">
+    <!-- <div style="padding-left: 40px; padding-right: 40px; padding-top:0px !important; " contenteditable="true"> -->
+
+    <table style="width: 100%;" style="color:black">
+      <thead>
         <tr>
-          <td style="padding-top: 10px;width: 90px !important;">
-            <img src="<?php echo site_url("assets/uploads/" . $system_global_settings[0]->sytem_admin_logo); ?>" alt="<?php echo $system_global_settings[0]->system_title ?>" title="<?php echo $system_global_settings[0]->system_title ?>" style="width:80px !important" />
-          </td>
-          <td style="vertical-align: top; text-align:left; ">
-            <h3 style="color:black; font-weight: bold"><?php echo $system_global_settings[0]->system_title ?> </h3>
-            <h6 style="color:black; font-weight: bold"><?php echo $system_global_settings[0]->system_sub_title ?></h6>
+          <th style="text-align: center;">
+            <div style=" width:100%">
+              <table class="table" style="border: 0px !important; background:#F9F9F9">
+                <tr>
+                  <td style="padding-top: 10px;width: 90px !important;">
+                    <img src="<?php echo site_url("assets/uploads/" . $system_global_settings[0]->sytem_admin_logo); ?>" alt="<?php echo $system_global_settings[0]->system_title ?>" title="<?php echo $system_global_settings[0]->system_title ?>" style="width:80px !important" />
+                  </td>
+                  <td style="vertical-align: top; text-align:left; ">
+                    <h4 style="color:black; font-weight: bold"><?php echo $system_global_settings[0]->system_title ?> </h4>
+                    <h6 style="color:black; font-weight: bold"><?php echo $system_global_settings[0]->system_sub_title ?></h6>
 
-          </td>
-          <td style="text-align:left; vertical-align: top;">
-            <h4 style="color:black; "><strong>
-                Phone No: <?php echo $system_global_settings[0]->phone_number ?><br />
-                Mobile No: <?php echo $system_global_settings[0]->mobile_number ?><br />
-                Email: <?php echo $system_global_settings[0]->email_address; ?>
-              </strong>
-            </h4>
-            </ul>
+                  </td>
+                  <td style="text-align:left;">
+                    <h5 style="color:black; line-height:1.3em">
+                      Phone No: <?php echo $system_global_settings[0]->phone_number ?><br />
+                      Mobile No: <?php echo $system_global_settings[0]->mobile_number ?><br />
+                      Email: <?php echo $system_global_settings[0]->email_address; ?></li><br />
+                    </h5>
+                    </ul>
 
-          </td>
+                  </td>
+                </tr>
+
+              </table>
+            </div>
+            <p style="text-align:center">
+            <h3><?php echo $title; ?></h3>
+            </p>
+          </th>
         </tr>
-
-      </table>
-    </div>
-
-
-
-    <div style="padding-left: 40px; padding-right: 40px; padding-top:0px !important;" contenteditable="true">
-
-      <table style="width: 100%;" style="color:black">
-        <thead>
-          <tr>
-            <th style="text-align: center;">
-              <div class="print-page-header-space"></div>
-              <p style="text-align:center">
-              <h3 style="color:red"><?php echo $title; ?></h3>
-              </p>
-            </th>
-          </tr>
-
-        </thead>
-        <tbody>
-
-          <tr>
-            <td>
+        <tr>
+          <td>
+            <div style="padding-left: 40px; padding-right: 40px; padding-top:0px !important; " contenteditable="true">
               <table style="width: 100%; margin-top: 5px; margin-bottom: 10px;">
                 <tr>
                   <td style="width: 40%;">
@@ -322,78 +197,78 @@
                   </td>
                 </tr>
               </table>
-
-              <br />
+            </div>
+            <hr />
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div style="padding-left: 40px; padding-right: 40px; padding-top:0px !important; " contenteditable="true">
               <?php if ($invoice_detail->remarks) { ?>
-
-                <?php echo $invoice_detail->remarks; ?>
-
+                <div style="text-align: left; color:black">
+                  <p style=" padding: 5px;">
+                    <?php echo $invoice_detail->remarks; ?>
+                  </p>
+                </div>
               <?php } ?>
-              <br />
-              <br />
-              <br />
-              <?php
+            </div>
+          </td>
+        </tr>
 
-              $query = "SELECT `test_report_by` FROM `invoices` WHERE `invoice_id`= '" . $invoice_detail->invoice_id . "' ";
-              $lab_technician_id = $this->db->query($query)->result()[0]->test_report_by;
+      </tbody>
+      <tfoot>
+        <tr>
+          <td>
+            <br />
+            <br />
+            <?php
 
-              $query = "SELECT
+            $query = "SELECT `test_report_by` FROM `invoices` WHERE `invoice_id`= '" . $invoice_detail->invoice_id . "' ";
+            $lab_technician_id = $this->db->query($query)->result()[0]->test_report_by;
+
+            $query = "SELECT
                   `roles`.`role_title`,
                   `users`.`user_title`  
               FROM `roles`,
               `users` 
               WHERE `roles`.`role_id` = `users`.`role_id`
               AND `users`.`user_id`='" . $lab_technician_id . "'";
-              $user_data = $this->db->query($query)->result()[0];
-              ?>
-              <div style="padding-left: 40px; padding-right: 40px; padding-top:0px !important; " contenteditable="true">
-                <p class="divFooter" style="text-align: right;">
-                  <b><?php echo $user_data->user_title; ?> (<?php echo $user_data->role_title; ?>)</b>
-                  <br />
-                  <?php echo $system_global_settings[0]->system_title ?><br />Peshawar
-                </p>
-              </div>
+            $user_data = $this->db->query($query)->result()[0];
+            ?>
+            <div style="padding-left: 40px; padding-right: 40px; padding-top:0px !important; " contenteditable="true">
+              <p class="divFooter" style="text-align: right;">
+                <b><?php echo $user_data->user_title; ?> (<?php echo $user_data->role_title; ?>)</b>
+                <br />
+                <?php echo $system_global_settings[0]->system_title ?><br />Peshawar
+              </p>
+            </div>
+
+            <p class="fixed-footer" style="text-align: center; background:#F9F9F9;">
+              <?php echo $system_global_settings[0]->address ?>
               <br />
+              <small>Print @ <?php echo date("d M, Y h:m:s A"); ?>
+                by
+                <?php
+                $query = "SELECT
+                            `roles`.`role_title`,
+                            `users`.`user_title`  
+                        FROM `roles`,
+                        `users` 
+                        WHERE `roles`.`role_id` = `users`.`role_id`
+                        AND `users`.`user_id`='" . $this->session->userdata("user_id") . "'";
+                $user_data = $this->db->query($query)->result()[0];
+                ?>
+                <?php echo $user_data->user_title; ?> (<?php echo $user_data->role_title; ?>)
+              </small>
+            </p>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+    <!-- </div> -->
 
-            </td>
-          </tr>
-          <tr>
-            <td>
-
-            </td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr>
-            <td>
-              <div class="page-footer-space"></div>
-            </td>
-          </tr>
-        </tfoot>
-      </table>
-    </div>
-    <div class="page-footer" style="background-color: rgb(211, 211, 211) !important; border:1px solid rgb(169,169,169)">
-
-
-      <p class="fixed-footer" style="text-align: center; background:#F9F9F9;">
-        <?php echo $system_global_settings[0]->address ?>
-        <br />
-        <small>Print @ <?php echo date("d M, Y h:m:s A"); ?>
-          by
-          <?php
-          $query = "SELECT
-                      `roles`.`role_title`,
-                      `users`.`user_title`  
-                  FROM `roles`,
-                  `users` 
-                  WHERE `roles`.`role_id` = `users`.`role_id`
-                  AND `users`.`user_id`='" . $this->session->userdata("user_id") . "'";
-          $user_data = $this->db->query($query)->result()[0];
-          ?>
-          <?php echo $user_data->user_title; ?> (<?php echo $user_data->role_title; ?>)
-        </small>
-      </p>
-    </div>
   </page>
 </body>
 
