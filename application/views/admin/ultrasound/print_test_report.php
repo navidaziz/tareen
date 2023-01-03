@@ -241,7 +241,8 @@
 
               <p class="divFooter" style="text-align: right;">
                 <b><?php echo $user_data->user_title; ?> (<?php echo $user_data->role_title; ?>)</b>
-                <br />Tareen Infertility & Impotence Center <br />Peshawar
+                <br />
+                <?php echo $system_global_settings[0]->system_title ?><br />Peshawar
               </p>
 
               <p style="text-align: center;">

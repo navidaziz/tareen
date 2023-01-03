@@ -111,7 +111,7 @@
                       <img src="<?php echo site_url("assets/uploads/" . $system_global_settings[0]->sytem_admin_logo); ?>" alt="<?php echo $system_global_settings[0]->system_title ?>" title="<?php echo $system_global_settings[0]->system_title ?>" style="width:80px !important" />
                     </td>
                     <td style="vertical-align: top; text-align:left; ">
-                      <h3 style="color:black; font-weight: bold"><?php echo $system_global_settings[0]->system_title ?> </h3>
+                      <h4 style="color:black; font-weight: bold"><?php echo $system_global_settings[0]->system_title ?> </h4>
                       <h5 style="color:black; font-weight: bold"><?php echo $system_global_settings[0]->system_sub_title ?></h5>
 
                     </td>
