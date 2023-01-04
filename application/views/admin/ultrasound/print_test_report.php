@@ -189,9 +189,7 @@
       page-break-after: always;
     }
 
-    .report_remarks>p {
-      font-size: 20px;
-    }
+
 
     @page {
       margin: 20mm
