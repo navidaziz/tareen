@@ -281,16 +281,6 @@
           <tr>
             <th style="text-align: center;">
               <div class="print-page-header-space"></div>
-              <h4 style="color:black; font-weight: bold"><?php echo $title; ?></h4>
-
-            </th>
-          </tr>
-
-        </thead>
-        <tbody>
-
-          <tr>
-            <td>
               <table style="width: 100%;  margin-bottom: 5px;">
                 <tr>
                   <td style="width: 40%;">
@@ -322,7 +312,9 @@
 
                     </div>
                   </td>
-                  <td style="width: 20%;"></td>
+                  <td style="width: 20%;">
+                    <h4> <?php echo $title ?> </h4>
+                  </td>
                   <td tyle="width: 40%;">
                     <div style="bor der: 1px dashed black; margin-top: 5px; padding:5px;">
                       <table style="text-align: left; width:100%; font-size: 12px !important; color:black">
@@ -353,6 +345,15 @@
                 </tr>
               </table>
               <hr />
+            </th>
+          </tr>
+
+        </thead>
+        <tbody>
+
+          <tr>
+            <td>
+
               <div class="report_remarks">
                 <?php if ($invoice_detail->remarks) { ?>
 

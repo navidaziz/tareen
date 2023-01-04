@@ -11,11 +11,10 @@
   <script src="script.js"></script>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta charset="utf-8">
-  <title>CCML</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <link rel="stylesheet" type="text/css" href="<?php echo site_url("assets/" . ADMIN_DIR); ?>/css/cloud-admin.css" media="screen,print" />
+  <link rel="stylesheet" type="text/css" href="<?php echo site_url("assets/" . ADMIN_DIR); ?>/css/clou d-admin.css" media="screen,print" />
   <link rel="stylesheet" type="text/css" href="<?php echo site_url("assets/" . ADMIN_DIR); ?>/css/themes/default.css" media="screen,print" id="skin-switcher" />
   <link rel="stylesheet" type="text/css" href="<?php echo site_url("assets/" . ADMIN_DIR); ?>/css/responsive.css" media="screen,print" />
   <link rel="stylesheet" type="text/css" href="<?php echo site_url("assets/" . ADMIN_DIR); ?>/css/custom.css" media="screen,print" />
@@ -25,7 +24,17 @@
     body {
       background: rgb(204, 204, 204);
 
+      font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
     }
+
+
+
+    element.style {
+      color: black;
+      font-weight: bold;
+    }
+
 
     page {
       background: white;
@@ -33,12 +42,15 @@
       margin: 0 auto;
       margin-bottom: 0.5cm;
       box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+
     }
+
+
 
     page[size="A4"] {
       width: 21cm;
-      /* height: 29.7cm;  */
-      height: auto;
+      /* height: 29.7cm; */
+      height: 100%;
     }
 
     page[size="A4"][layout="landscape"] {
@@ -73,6 +85,7 @@
         margin: 0;
         box-shadow: 0;
         color: black;
+
       }
 
 
@@ -93,60 +106,191 @@
       font-size: 12px !important;
       color: black;
     }
+
+    /* Styles go here */
+    @media screen {
+      .print-page-header {
+        height: auto;
+        display: none;
+      }
+    }
+
+
+
+
+    @media screen {
+      .page-footer {
+        height: 50px;
+        display: none;
+      }
+    }
+
+
+
+    @media print {
+      .page-footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        border-top: 1px solid gray;
+        /* for demo */
+        content: counter(page) " of " counter(pages);
+        /* for demo */
+      }
+
+      .page-footer-space {
+        height: 80px;
+
+      }
+    }
+
+    @media screen {
+      .page-footer {
+        position: relative;
+
+        width: 100%;
+        border-top: 1px solid gray;
+        /* for demo */
+        display: block;
+        /* for demo */
+      }
+
+      .page-footer-space {
+        height: 80px;
+        display: none;
+      }
+    }
+
+    @media print {
+      .print-page-header {
+        position: fixed;
+        top: 0mm;
+        width: 100%;
+        background: yellow;
+        /* for demo */
+        /* for demo */
+      }
+
+      .print-page-header-space {
+        height: 90px;
+      }
+    }
+
+    @media screen {
+      .print-page-header {
+        position: relative;
+        top: 0mm;
+        width: 100%;
+        display: block;
+        /* for demo */
+        /* for demo */
+      }
+
+      .print-page-header-space {
+        height: 0px;
+        display: none;
+      }
+    }
+
+
+
+
+    .page {
+      page-break-after: always;
+    }
+
+
+
+    @page {
+      margin: 20mm
+    }
+
+    @media print {
+      thead {
+        display: table-header-group;
+      }
+
+      tfoot {
+        display: table-footer-group;
+      }
+
+      button {
+        display: none;
+      }
+
+      body {
+        margin: 0;
+        background-color: white !important;
+      }
+
+      page {
+        background: white;
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 0.5cm;
+        box-shadow: none !important;
+
+      }
+    }
   </style>
+
 </head>
 
 <body>
   <page size='A4'>
 
+    <div class="print-page-header" style="background-color: rgb(229, 228, 226) !important;">
+      <table style="width:100%">
+        <tr>
+          <td style="padding-top: 10px; width: 90px !important;">
+            <img src="<?php echo site_url("assets/uploads/" . $system_global_settings[0]->sytem_admin_logo); ?>" alt="<?php echo $system_global_settings[0]->system_title ?>" title="<?php echo $system_global_settings[0]->system_title ?>" style="width:80px !important" />
+          </td>
+          <td style="vertical-align: top; text-align:left; ">
+            <h3 style="color:black; font-weight: bold"><?php echo $system_global_settings[0]->system_title ?> </h3>
+            <h4 style="color:black; font-weight: bold; margin-top:-12px"><?php echo $system_global_settings[0]->system_sub_title ?></h4>
+
+          </td>
+          <td style="text-align:left; vertical-align: middle;">
+            <table style="font-size: smaller;">
+              <tr>
+                <td>Phone No: </td>
+                <td><strong><?php echo str_replace(",", " - ", $system_global_settings[0]->phone_number) ?></strong></td>
+              </tr>
+              <tr>
+                <td>Mobile No: </td>
+                <td><strong><?php echo str_replace(",", " - ", $system_global_settings[0]->mobile_number) ?></strong></td>
+              </tr>
+              <tr>
+                <td>Email:</td>
+                <td><strong><?php echo $system_global_settings[0]->email_address; ?></strong></td>
+              </tr>
+            </table>
+
+          </td>
+        </tr>
+
+      </table>
+    </div>
+
+
+
+
     <div style="padding-left: 40px; padding-right: 40px; padding-top:0px !important;" contenteditable="true">
-      <table style="width: 100%;" style="color:black">
+      <table class="" style="width: 100%;" style="color:black">
         <thead>
           <tr>
             <th style="text-align: center;">
-              <div style=" width:100%">
-                <table class="table" style="border: 0px !important;">
-                  <tr>
-                    <td style="padding-top: 10px;width: 90px !important;">
-                      <img src="<?php echo site_url("assets/uploads/" . $system_global_settings[0]->sytem_admin_logo); ?>" alt="<?php echo $system_global_settings[0]->system_title ?>" title="<?php echo $system_global_settings[0]->system_title ?>" style="width:80px !important" />
-                    </td>
-                    <td style="vertical-align: top; text-align:left; ">
-                      <h4 style="color:black; font-weight: bold"><?php echo $system_global_settings[0]->system_title ?> </h4>
-                      <h5 style="color:black; font-weight: bold"><?php echo $system_global_settings[0]->system_sub_title ?></h5>
-
-                    </td>
-                    <td style="text-align:left;">
-                      <h5 style="color:black; line-height:1.3em">
-                        Phone No: <?php echo $system_global_settings[0]->phone_number ?><br />
-                        Mobile No: <?php echo $system_global_settings[0]->mobile_number ?><br />
-                        Email: <?php echo $system_global_settings[0]->email_address; ?></li><br />
-                      </h5>
-                      </ul>
-
-                    </td>
-                  </tr>
-
-                </table>
-              </div>
-
-
-              <p style="text-align:center">
-              <h3>Lab Report</h3>
-              </p>
-            </th>
-          </tr>
-          <tr>
-            <td>
-              <table style="width: 100%; margin-top: 5px; margin-bottom: 10px;">
+              <div class="print-page-header-space"></div>
+              <table style="width: 100%;">
                 <tr>
                   <td style="width: 40%;">
-
-                    <div style="bor der: 1px dashed black; margin-top: 5px; padding:5px">
+                    <div style="margin-top: 5px; padding:5px">
                       <table style="text-align: left; width:100%; font-size: 12px !important; color:black;">
                         <tr>
                           <th>Patient ID: <?php echo $invoice_detail->patient_id; ?></th>
                           <td>History No: <?php echo $invoice_detail->history_file_no; ?></td>
                         </tr>
+
                         <tr>
                           <th>Patient Name: </th>
                           <td><?php echo trim(ucwords(strtolower($invoice_detail->patient_name))); ?></td>
@@ -164,17 +308,19 @@
                           <td><?php echo trim(ucwords(strtolower($invoice_detail->patient_address))); ?></td>
                         </tr>
                       </table>
+
                     </div>
                   </td>
-                  <td style="width: 20%;"></td>
+                  <td style="vertical-align: top;">
+                    <h3>Lab Report</h3>
+                  </td>
                   <td tyle="width: 40%;">
-                    <div style="bor der: 1px dashed black; margin-top: 5px; padding:5px;">
+                    <div style="margin-top: 5px; padding:5px;">
                       <table style="text-align: left; width:100%; font-size: 12px !important; color:black">
                         <tr>
                           <th>Invoice No: </th>
                           <td> <?php echo $invoice_detail->invoice_id; ?></td>
                         </tr>
-
                         <tr>
                           <th>Refereed By:</th>
                           <td><?php echo str_replace("Muhammad", "M.", $invoice_detail->doctor_name) . "( " . $invoice_detail->doctor_designation . " )"; ?></td>
@@ -193,38 +339,34 @@
                         </tr>
                       </table>
                     </div>
-
                   </td>
                 </tr>
               </table>
               <hr />
-            </td>
+            </th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>
-
-              <?php
-              $count = 1;
-              foreach ($patient_tests_groups as $patient_tests_group) { ?>
+            <td> <?php
+                  $count = 1;
+                  foreach ($patient_tests_groups as $patient_tests_group) { ?>
                 <h5 style="color:black;">
                   <strong><?php echo $patient_tests_group->test_group_name; ?>
                   </strong>
                 </h5>
                 <?php
 
-                $normal_value = false;
-                foreach ($patient_tests_group->patient_tests as $patient_test) {
-                  //if ($patient_test->test_result != '') {
-                  if (trim($patient_test->test_normal_value) != "") {
-                    $normal_value = true;
-                  }
-                  //}
-                }
+                    $normal_value = false;
+                    foreach ($patient_tests_group->patient_tests as $patient_test) {
+                      //if ($patient_test->test_result != '') {
+                      if (trim($patient_test->test_normal_value) != "") {
+                        $normal_value = true;
+                      }
+                      //}
+                    }
                 ?>
-
-                <table class="table table-bordered" style="text-align: left; font-size:10px">
+                <table class="table" style="text-align: left; font-size:10px; width:100%">
                   <tr>
                     <!-- <th >#</th> -->
                     <th style="width: 200px;">TEST(s)</th>
@@ -234,12 +376,8 @@
                       <th style="width: 300px;">NORMALS</th>
                     <?php } ?>
                   </tr>
-
-
-
                   <?php
-
-                  foreach ($patient_tests_group->patient_tests as $patient_test) { ?>
+                    foreach ($patient_tests_group->patient_tests as $patient_test) { ?>
                     <?php //if ($patient_test->test_result != '') { 
                     ?>
                     <?php if ($count == 1) { ?>
@@ -271,16 +409,9 @@
                 <div style="text-align: left; color:black"><strong>Remarks:</strong>
                   <br />
                   <?php echo $invoice_detail->remarks; ?>
-
-
                 </div>
               <?php } ?>
-            </td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr>
-            <td>
+
               <br />
               <br />
               <?php
@@ -296,36 +427,50 @@
               WHERE `roles`.`role_id` = `users`.`role_id`
               AND `users`.`user_id`='" . $lab_technician_id . "'";
               $user_data = $this->db->query($query)->result()[0];
-              ?> </p>
-
-              <p class="divFooter" style="text-align: right;">
-                <b><?php echo $user_data->user_title; ?> (<?php echo $user_data->role_title; ?>)</b>
-                <br />Tareen Infertility & Impotence Center
-                <br />Peshawar
-              </p>
-
-              <p style="text-align: center;">
-                <small>Print @ <?php echo date("d M, Y h:m:s A"); ?>
-                  by
-                  <?php
-                  $query = "SELECT
-                            `roles`.`role_title`,
-                            `users`.`user_title`  
-                        FROM `roles`,
-                        `users` 
-                        WHERE `roles`.`role_id` = `users`.`role_id`
-                        AND `users`.`user_id`='" . $this->session->userdata("user_id") . "'";
-                  $user_data = $this->db->query($query)->result()[0];
-                  ?>
-                  <?php echo $user_data->user_title; ?> (<?php echo $user_data->role_title; ?>)
+              ?>
+              <div style="text-align: right;">
+                <small style="text-align: right;">
+                  <b><?php echo $user_data->user_title; ?> (<?php echo $user_data->role_title; ?>)</b>
+                  <br />
+                  <?php echo $system_global_settings[0]->system_title ?><br />Peshawar
                 </small>
-              </p>
+              </div>
+              <br />
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td>
+              <div class="page-footer-space"></div>
             </td>
           </tr>
         </tfoot>
       </table>
     </div>
+    <div class="page-footer" style="background-color: rgb(229, 228, 226) !important; border:1px solid rgb(229, 228, 226); text-align:center">
 
+      <small>
+        <strong><?php echo $system_global_settings[0]->address ?></strong>
+
+        <br />
+        Print @ <?php echo date("d M, Y h:m:s A"); ?>
+        by
+        <?php
+        $query = "SELECT
+                `roles`.`role_title`,
+                `users`.`user_title`  
+            FROM `roles`,
+            `users` 
+            WHERE `roles`.`role_id` = `users`.`role_id`
+            AND `users`.`user_id`='" . $this->session->userdata("user_id") . "'";
+        $user_data = $this->db->query($query)->result()[0];
+        ?>
+        <?php echo $user_data->user_title; ?> (<?php echo $user_data->role_title; ?>)
+      </small>
+
+
+    </div>
   </page>
 </body>
 
