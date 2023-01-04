@@ -247,7 +247,7 @@
           </td>
           <td style="vertical-align: top; text-align:left; ">
             <h3 style="color:black; font-weight: bold"><?php echo $system_global_settings[0]->system_title ?> </h3>
-            <h4 style="color:black; font-weight: bold; margin-top:-12px"><?php echo $system_global_settings[0]->system_sub_title ?></h4>
+            <h4 style="color:black; font-weight: bold;"><?php echo $system_global_settings[0]->system_sub_title ?></h4>
 
           </td>
           <td style="text-align:left; vertical-align: middle;">
