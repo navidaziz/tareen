@@ -134,9 +134,9 @@
         <textarea name="test_remarks" id="test_remarks" class="form-control" style="margin-bottom: 5px;"><?php if ($invoice->remarks) {
                                                                                                             echo $invoice->remarks;
                                                                                                           } else { ?>
-                                                                                                          <h2>PELVIS</h2><br />
-                                                                                                          <h2>FINDINGS</h2><br />
-                                                                                                          <h2>IMPRESSION</h2><br />
+                                                                                                          <h4>PELVIS</h4><br />
+                                                                                                          <h4>FINDINGS</h4><br />
+                                                                                                          <h4>IMPRESSION</h4><br />
                                                                                                           <?php } ?></textarea>
       </div>
 
