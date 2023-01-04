@@ -361,7 +361,6 @@
               </div>
             <?php } ?>
             <br />
-            <br />
             <?php
 
             $query = "SELECT `test_report_by` FROM `invoices` WHERE `invoice_id`= '" . $invoice_detail->invoice_id . "' ";
@@ -380,7 +379,7 @@
               <small style="text-align: right;">
                 <b><?php echo $user_data->user_title; ?> (<?php echo $user_data->role_title; ?>)</b>
                 <br />
-                <?php echo $system_global_settings[0]->system_title ?><br />Peshawar
+                <?php echo $system_global_settings[0]->system_title ?>
               </small>
             </div>
             <br />
