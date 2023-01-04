@@ -375,7 +375,7 @@
               AND `users`.`user_id`='" . $lab_technician_id . "'";
             $user_data = $this->db->query($query)->result()[0];
             ?>
-            <div style="padding-left: 40px; padding-right: 40px; padding-top:0px !important; " contenteditable="true">
+            <div style="text-align: right;">
               <small style="text-align: right;">
                 <b><?php echo $user_data->user_title; ?> (<?php echo $user_data->role_title; ?>)</b>
                 <br />
