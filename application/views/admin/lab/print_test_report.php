@@ -15,7 +15,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <link rel="stylesheet" type="text/css" href="<?php echo site_url("assets/" . ADMIN_DIR); ?>/css/cl oud-admin.css" media="screen,print" />
+  <link rel="stylesheet" type="text/css" href="<?php echo site_url("assets/" . ADMIN_DIR); ?>/css/cloud-admin.css" media="screen,print" />
   <link rel="stylesheet" type="text/css" href="<?php echo site_url("assets/" . ADMIN_DIR); ?>/css/themes/default.css" media="screen,print" id="skin-switcher" />
   <link rel="stylesheet" type="text/css" href="<?php echo site_url("assets/" . ADMIN_DIR); ?>/css/responsive.css" media="screen,print" />
   <link rel="stylesheet" type="text/css" href="<?php echo site_url("assets/" . ADMIN_DIR); ?>/css/custom.css" media="screen,print" />
@@ -51,7 +51,7 @@
     page[size="A4"] {
       width: 21cm;
       /* height: 29.7cm; */
-      height: 100%;
+      height: auto;
     }
 
     page[size="A4"][layout="landscape"] {
@@ -279,9 +279,9 @@
           <tr>
             <th style="text-align: center;">
               <div class="print-page-header-space"></div>
-              <table style="width: 100%; margin-top: 5px; margin-bottom: 10px;">
+              <table style="width: 100%;">
                 <tr>
-                  <td style="width: 40%;">
+                  <td style="width: 40%; padding:5px">
 
                     <div>
                       <table style="text-align: left; width:100%; font-size: 12px !important; color:black;">
@@ -312,7 +312,7 @@
                     <h3 style="text-align: center;">Lab Report</h3>
                   </td>
                   <td style="width: 40%;">
-                    <div style="bor der: 1px dashed black; margin-top: 5px; padding:5px;">
+                    <div>
                       <table style="text-align: left; width:100%; font-size: 12px !important; color:black">
                         <tr>
                           <th>Invoice No: </th>
@@ -341,10 +341,9 @@
                   </td>
                 </tr>
               </table>
-              <hr />
+              <hr style="margin: 2px;" />
             </th>
           </tr>
-
         </thead>
         <tbody>
           <tr>
@@ -352,9 +351,8 @@
               <?php
               $count = 1;
               foreach ($patient_tests_groups as $patient_tests_group) { ?>
-                <h5 style="color:black;">
-                  <strong><?php echo $patient_tests_group->test_group_name; ?>
-                  </strong>
+                <h5 style="margin:5px">
+                  <?php echo $patient_tests_group->test_group_name; ?>
                 </h5>
                 <?php
 
