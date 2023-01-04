@@ -15,7 +15,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <link rel="stylesheet" type="text/css" href="<?php echo site_url("assets/" . ADMIN_DIR); ?>/css/cloud-admin.css" media="screen,print" />
+  <link rel="stylesheet" type="text/css" href="<?php echo site_url("assets/" . ADMIN_DIR); ?>/css/clou d-admin.css" media="screen,print" />
   <link rel="stylesheet" type="text/css" href="<?php echo site_url("assets/" . ADMIN_DIR); ?>/css/themes/default.css" media="screen,print" id="skin-switcher" />
   <link rel="stylesheet" type="text/css" href="<?php echo site_url("assets/" . ADMIN_DIR); ?>/css/responsive.css" media="screen,print" />
   <link rel="stylesheet" type="text/css" href="<?php echo site_url("assets/" . ADMIN_DIR); ?>/css/custom.css" media="screen,print" />
@@ -24,8 +24,16 @@
   <style>
     body {
       background: rgb(204, 204, 204);
-      color: black;
 
+      font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+    }
+
+
+
+    element.style {
+      color: black;
+      font-weight: bold;
     }
 
 
@@ -35,12 +43,15 @@
       margin: 0 auto;
       margin-bottom: 0.5cm;
       box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+
     }
+
+
 
     page[size="A4"] {
       width: 21cm;
-      /* height: 29.7cm;  */
-      height: auto;
+      /* height: 29.7cm; */
+      height: 100%;
     }
 
     page[size="A4"][layout="landscape"] {
@@ -177,7 +188,7 @@
       }
 
       .print-page-header-space {
-        height: 90px;
+        height: 0px;
         display: none;
       }
     }
@@ -210,6 +221,16 @@
 
       body {
         margin: 0;
+        background-color: white !important;
+      }
+
+      page {
+        background: white;
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 0.5cm;
+        box-shadow: none !important;
+
       }
     }
   </style>
@@ -221,12 +242,12 @@
     <div class="print-page-header" style="background-color: rgb(229, 228, 226) !important;">
       <table style="width:100%">
         <tr>
-          <td style="padding-top: 10px;width: 90px !important;">
+          <td style="padding-top: 10px; width: 90px !important;">
             <img src="<?php echo site_url("assets/uploads/" . $system_global_settings[0]->sytem_admin_logo); ?>" alt="<?php echo $system_global_settings[0]->system_title ?>" title="<?php echo $system_global_settings[0]->system_title ?>" style="width:80px !important" />
           </td>
           <td style="vertical-align: top; text-align:left; ">
             <h3 style="color:black; font-weight: bold"><?php echo $system_global_settings[0]->system_title ?> </h3>
-            <h6 style="color:black; font-weight: bold"><?php echo $system_global_settings[0]->system_sub_title ?></h6>
+            <h4 style="color:black; font-weight: bold; margin-top:-12px"><?php echo $system_global_settings[0]->system_sub_title ?></h4>
 
           </td>
           <td style="text-align:left; vertical-align: middle;">
@@ -253,16 +274,15 @@
 
 
 
-    <div style="padding-left: 40px; padding-right: 40px; padding-top:0px !important;" contenteditable="true">
+    <div style="padding-left: 40px; padding-right: 40px; padding-top:0px; !important;" contenteditable="true">
 
-      <table style="width: 100%;" style="color:black">
+      <table style="width: 100%; ">
         <thead>
           <tr>
             <th style="text-align: center;">
               <div class="print-page-header-space"></div>
-              <p style="text-align:center">
               <h4 style="color:black; font-weight: bold"><?php echo $title; ?></h4>
-              </p>
+
             </th>
           </tr>
 
@@ -271,7 +291,7 @@
 
           <tr>
             <td>
-              <table style="width: 100%; margin-top: 5px; margin-bottom: 10px;">
+              <table style="width: 100%;  margin-bottom: 5px;">
                 <tr>
                   <td style="width: 40%;">
 
@@ -382,28 +402,28 @@
         </tfoot>
       </table>
     </div>
-    <div class="page-footer" style="background-color: rgb(229, 228, 226) !important; border:1px solid rgb(229, 228, 226)">
+    <div class="page-footer" style="background-color: rgb(229, 228, 226) !important; border:1px solid rgb(229, 228, 226); text-align:center">
 
-
-      <p class="fixed-footer" style="text-align: center; background:#F9F9F9;">
+      <small>
         <strong><?php echo $system_global_settings[0]->address ?></strong>
 
         <br />
-        <small>Print @ <?php echo date("d M, Y h:m:s A"); ?>
-          by
-          <?php
-          $query = "SELECT
+        Print @ <?php echo date("d M, Y h:m:s A"); ?>
+        by
+        <?php
+        $query = "SELECT
                       `roles`.`role_title`,
                       `users`.`user_title`  
                   FROM `roles`,
                   `users` 
                   WHERE `roles`.`role_id` = `users`.`role_id`
                   AND `users`.`user_id`='" . $this->session->userdata("user_id") . "'";
-          $user_data = $this->db->query($query)->result()[0];
-          ?>
-          <?php echo $user_data->user_title; ?> (<?php echo $user_data->role_title; ?>)
-        </small>
-      </p>
+        $user_data = $this->db->query($query)->result()[0];
+        ?>
+        <?php echo $user_data->user_title; ?> (<?php echo $user_data->role_title; ?>)
+      </small>
+
+
     </div>
   </page>
 </body>
