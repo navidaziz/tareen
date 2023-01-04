@@ -11,10 +11,11 @@
   <script src="script.js"></script>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta charset="utf-8">
+  <title>CCML</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <link rel="stylesheet" type="text/css" href="<?php echo site_url("assets/" . ADMIN_DIR); ?>/css/clou d-admin.css" media="screen,print" />
+  <link rel="stylesheet" type="text/css" href="<?php echo site_url("assets/" . ADMIN_DIR); ?>/css/cl oud-admin.css" media="screen,print" />
   <link rel="stylesheet" type="text/css" href="<?php echo site_url("assets/" . ADMIN_DIR); ?>/css/themes/default.css" media="screen,print" id="skin-switcher" />
   <link rel="stylesheet" type="text/css" href="<?php echo site_url("assets/" . ADMIN_DIR); ?>/css/responsive.css" media="screen,print" />
   <link rel="stylesheet" type="text/css" href="<?php echo site_url("assets/" . ADMIN_DIR); ?>/css/custom.css" media="screen,print" />
@@ -233,7 +234,6 @@
       }
     }
   </style>
-
 </head>
 
 <body>
@@ -273,24 +273,22 @@
     </div>
 
 
-
-
     <div style="padding-left: 40px; padding-right: 40px; padding-top:0px !important;" contenteditable="true">
-      <table class="" style="width: 100%;" style="color:black">
+      <table style="width: 100%;" style="color:black">
         <thead>
           <tr>
             <th style="text-align: center;">
               <div class="print-page-header-space"></div>
-              <table style="width: 100%;">
+              <table style="width: 100%; margin-top: 5px; margin-bottom: 10px;">
                 <tr>
                   <td style="width: 40%;">
-                    <div style="margin-top: 5px; padding:5px">
+
+                    <div>
                       <table style="text-align: left; width:100%; font-size: 12px !important; color:black;">
                         <tr>
                           <th>Patient ID: <?php echo $invoice_detail->patient_id; ?></th>
                           <td>History No: <?php echo $invoice_detail->history_file_no; ?></td>
                         </tr>
-
                         <tr>
                           <th>Patient Name: </th>
                           <td><?php echo trim(ucwords(strtolower($invoice_detail->patient_name))); ?></td>
@@ -308,19 +306,19 @@
                           <td><?php echo trim(ucwords(strtolower($invoice_detail->patient_address))); ?></td>
                         </tr>
                       </table>
-
                     </div>
                   </td>
                   <td style="vertical-align: top;">
-                    <h3>Lab Report</h3>
+                    <h3 style="text-align: center;">Lab Report</h3>
                   </td>
-                  <td tyle="width: 40%;">
-                    <div style="margin-top: 5px; padding:5px;">
+                  <td style="width: 40%;">
+                    <div style="bor der: 1px dashed black; margin-top: 5px; padding:5px;">
                       <table style="text-align: left; width:100%; font-size: 12px !important; color:black">
                         <tr>
                           <th>Invoice No: </th>
                           <td> <?php echo $invoice_detail->invoice_id; ?></td>
                         </tr>
+
                         <tr>
                           <th>Refereed By:</th>
                           <td><?php echo str_replace("Muhammad", "M.", $invoice_detail->doctor_name) . "( " . $invoice_detail->doctor_designation . " )"; ?></td>
@@ -339,33 +337,37 @@
                         </tr>
                       </table>
                     </div>
+
                   </td>
                 </tr>
               </table>
               <hr />
             </th>
           </tr>
+
         </thead>
         <tbody>
           <tr>
-            <td> <?php
-                  $count = 1;
-                  foreach ($patient_tests_groups as $patient_tests_group) { ?>
-                <h5 style="color:black; margin: 0px; margin-bottom:2px; margin-top:3px">
+            <td>
+              <?php
+              $count = 1;
+              foreach ($patient_tests_groups as $patient_tests_group) { ?>
+                <h5 style="color:black;">
                   <strong><?php echo $patient_tests_group->test_group_name; ?>
                   </strong>
                 </h5>
                 <?php
 
-                    $normal_value = false;
-                    foreach ($patient_tests_group->patient_tests as $patient_test) {
-                      //if ($patient_test->test_result != '') {
-                      if (trim($patient_test->test_normal_value) != "") {
-                        $normal_value = true;
-                      }
-                      //}
-                    }
+                $normal_value = false;
+                foreach ($patient_tests_group->patient_tests as $patient_test) {
+                  //if ($patient_test->test_result != '') {
+                  if (trim($patient_test->test_normal_value) != "") {
+                    $normal_value = true;
+                  }
+                  //}
+                }
                 ?>
+
                 <table class="table table-bordered" style="text-align: left; font-size:10px; width:100%">
                   <tr>
                     <!-- <th >#</th> -->
@@ -376,8 +378,12 @@
                       <th style="width: 300px;">NORMALS</th>
                     <?php } ?>
                   </tr>
+
+
+
                   <?php
-                    foreach ($patient_tests_group->patient_tests as $patient_test) { ?>
+
+                  foreach ($patient_tests_group->patient_tests as $patient_test) { ?>
                     <?php //if ($patient_test->test_result != '') { 
                     ?>
                     <?php if ($count == 1) { ?>
@@ -399,11 +405,6 @@
                   <?php } ?>
                 </table>
               <?php  } ?>
-
-            </td>
-          </tr>
-          <tr>
-            <td>
               <br />
               <?php if ($invoice_detail->remarks) { ?>
                 <div style="text-align: left; color:black"><strong>Remarks:</strong>
@@ -414,7 +415,6 @@
 
               <br />
               <?php
-
               $query = "SELECT `test_report_by` FROM `invoices` WHERE `invoice_id`= '" . $invoice_detail->invoice_id . "' ";
               $lab_technician_id = $this->db->query($query)->result()[0]->test_report_by;
 
@@ -437,6 +437,7 @@
               <br />
             </td>
           </tr>
+
         </tbody>
         <tfoot>
           <tr>

@@ -386,11 +386,7 @@
 
             </td>
           </tr>
-          <tr>
-            <td>
 
-            </td>
-          </tr>
         </tbody>
         <tfoot>
           <tr>
