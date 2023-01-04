@@ -351,7 +351,7 @@
               <?php
               $count = 1;
               foreach ($patient_tests_groups as $patient_tests_group) { ?>
-                <h5 style="margin:5px">
+                <h5 style="margin:5px;  font-weight: bold">
                   <?php echo $patient_tests_group->test_group_name; ?>
                 </h5>
                 <?php
