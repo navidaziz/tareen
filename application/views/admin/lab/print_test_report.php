@@ -351,7 +351,7 @@
             <td> <?php
                   $count = 1;
                   foreach ($patient_tests_groups as $patient_tests_group) { ?>
-                <h5 style="color:black; margin: 0px; margin-bottom:2px">
+                <h5 style="color:black; margin: 0px; margin-bottom:2px; margin-top:3px">
                   <strong><?php echo $patient_tests_group->test_group_name; ?>
                   </strong>
                 </h5>
