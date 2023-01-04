@@ -216,11 +216,11 @@
 
                 $normal_value = false;
                 foreach ($patient_tests_group->patient_tests as $patient_test) {
-                  if ($patient_test->test_result != '') {
-                    if (trim($patient_test->test_normal_value) != "") {
-                      $normal_value = true;
-                    }
+                  //if ($patient_test->test_result != '') {
+                  if (trim($patient_test->test_normal_value) != "") {
+                    $normal_value = true;
                   }
+                  //}
                 }
                 ?>
 
@@ -240,22 +240,24 @@
                   <?php
 
                   foreach ($patient_tests_group->patient_tests as $patient_test) { ?>
-                    <?php if ($patient_test->test_result != '') { ?>
-                      <?php if ($count == 1) { ?>
+                    <?php //if ($patient_test->test_result != '') { 
+                    ?>
+                    <?php if ($count == 1) { ?>
 
-                      <?php } ?>
-                      <tr>
-                        <th><?php echo $patient_test->test_name; ?></th>
-                        <th> <?php echo $patient_test->test_result; ?> <?php echo $patient_test->result_suffix; ?></th>
-                        <?php if ($normal_value) { ?>
-                          <th style="text-align: center;"> <small> <?php echo $patient_test->unit; ?> </small></th>
-
-                          <th style="width: 300px;">
-                            <small><?php echo $patient_test->test_normal_value; ?></small>
-                          </th>
-                        <?php } ?>
-                      </tr>
                     <?php } ?>
+                    <tr>
+                      <th><?php echo $patient_test->test_name; ?></th>
+                      <th> <?php echo $patient_test->test_result; ?> <?php echo $patient_test->result_suffix; ?></th>
+                      <?php if ($normal_value) { ?>
+                        <th style="text-align: center;"> <small> <?php echo $patient_test->unit; ?> </small></th>
+
+                        <th style="width: 300px;">
+                          <small><?php echo $patient_test->test_normal_value; ?></small>
+                        </th>
+                      <?php } ?>
+                    </tr>
+                    <?php //} 
+                    ?>
                   <?php } ?>
                 </table>
               <?php  } ?>
