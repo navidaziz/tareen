@@ -366,7 +366,7 @@
                       //}
                     }
                 ?>
-                <table class="table" style="text-align: left; font-size:10px; width:100%">
+                <table class="table table-bordered" style="text-align: left; font-size:10px; width:100%">
                   <tr>
                     <!-- <th >#</th> -->
                     <th style="width: 200px;">TEST(s)</th>
